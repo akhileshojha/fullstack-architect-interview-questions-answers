@@ -29,8 +29,8 @@
 * [Spring Cloud](https://duckduckgo.com)
 
 ### Database
-* [MongoDB]("mongodb-interview-questions-answers.md")
-* [DynomoDB](https://www.bing.com)
+* [MongoDB](mongodb-interview-questions-answers.md)
+* [DynamoDB](https://www.bing.com)
 * [MySQL](https://duckduckgo.com)
 * [PostgreSQL](https://www.google.com)
 * [Redis](https://www.bing.com)
