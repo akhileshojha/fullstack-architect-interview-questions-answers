@@ -31,7 +31,7 @@
 ### Database
 * [MongoDB](mongodb-interview-questions-answers.md)
 * [DynamoDB](README.md)
-* [MySQL](README.md)
+* [MySQL](mysql-interview-questions-answers.md)
 * [PostgreSQL](README.md)
 * [Redis](README.md)
 * [Memchached](README.md)
