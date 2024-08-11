@@ -9,7 +9,7 @@
 * [TypeScript](typescript-interview-questions-answers.md)
 * [React.js](react-js-interview-questions-answers.md)
 * [Next.js](next-js-interview-questions-answers.md)
-* [Redux](README.md)
+* [Redux](redux-interview-questions-answers.md)
 * [Angular](README.md)
 * [Vue.js](README.md)
 * [Nuxt.js](README.md)
