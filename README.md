@@ -8,7 +8,7 @@
 * [JavaScript](README.md)
 * [TypeScript](typescript-interview-questions-answers.md)
 * [React.js](react-js-interview-questions-answers.md)
-* [Next.js](README.md)
+* [Next.js](next-js-interview-questions-answers.md)
 * [Redux](README.md)
 * [Angular](README.md)
 * [Vue.js](README.md)
