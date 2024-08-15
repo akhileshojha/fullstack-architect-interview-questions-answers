@@ -36,6 +36,16 @@
 * [Redis](README.md)
 * [Memchached](README.md)
 
+### Testing
+* [Jest](jest-interview-questions-answers.md)
+* [Mocha](README.md)
+* [Cypress](README.md)
+* [Playwright](README.md)
+
+### API Testing
+* [Postman](README.md)
+* [Insomnia](README.md)
+
 ### Cloud platforms and DevOps
 * [AWS](aws-interview-questions-answers.md)
 * [GCP](README.md)
