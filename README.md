@@ -5,7 +5,7 @@
 ### Frontend Development
 * [HTML5](README.md)
 * [CSS3](README.md)
-* [JavaScript](README.md)
+* [JavaScript](javascript-interview-questions-answers.md)
 * [TypeScript](typescript-interview-questions-answers.md)
 * [React.js](react-js-interview-questions-answers.md)
 * [Next.js](next-js-interview-questions-answers.md)
