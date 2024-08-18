@@ -1071,3 +1071,537 @@ These additional HTML5 questions explore further nuances and functionalities of 
 
 These additional HTML5 questions continue to delve into important features and practices, ensuring a thorough understanding of HTML5 for modern web development.
 
+### HTML5 Interview Questions and Answers
+
+#### 101. **What is the `srcset` attribute in the `<img>` tag, and how does it improve image responsiveness?**
+   - **Question:** Explain the `srcset` attribute in the `<img>` tag and its purpose in responsive web design.
+   - **Answer:** The `srcset` attribute in the `<img>` tag is used to define multiple image sources for different screen sizes or resolutions. It allows the browser to choose the most appropriate image to load based on the device's screen size, resolution, or network conditions, thereby improving responsiveness and performance. Example:
+     ```html
+     <img src="small.jpg" 
+          srcset="small.jpg 480w, medium.jpg 800w, large.jpg 1200w" 
+          sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 1200px" 
+          alt="Example Image">
+     ```
+     In this example, the browser selects the most suitable image from the `srcset` based on the screen size and displays it, ensuring optimal performance and visual quality.
+
+#### 102. **How does the `picture` element differ from the `srcset` attribute?**
+   - **Question:** Compare the `picture` element and the `srcset` attribute in HTML5. When would you use each?
+   - **Answer:** The `picture` element provides more control over which image to display based on different conditions like media queries, whereas `srcset` is mainly used for selecting different image resolutions. The `picture` element is ideal when you want to serve completely different images depending on factors like device orientation or specific breakpoints. Example:
+     ```html
+     <picture>
+       <source media="(max-width: 600px)" srcset="small.jpg">
+       <source media="(max-width: 1200px)" srcset="medium.jpg">
+       <img src="large.jpg" alt="Example Image">
+     </picture>
+     ```
+     Here, the `picture` element allows specifying different images for different screen sizes.
+
+#### 103. **What is the `preload` attribute in the `<link>` tag, and how does it affect page load performance?**
+   - **Question:** Describe the `preload` attribute in the `<link>` tag and its impact on web page performance.
+   - **Answer:** The `preload` attribute is used in the `<link>` tag to instruct the browser to load a resource (like a stylesheet, script, or font) as soon as possible, even before it’s needed by the page. This can significantly improve page load performance, especially for critical resources. Example:
+     ```html
+     <link rel="preload" href="styles.css" as="style">
+     ```
+     By preloading the stylesheet, the browser can apply it more quickly when the content that relies on it is rendered.
+
+#### 104. **What are Microdata in HTML5, and how do they relate to structured data?**
+   - **Question:** Explain what Microdata are in HTML5 and their purpose in enhancing structured data.
+   - **Answer:** Microdata is a set of HTML5 attributes that helps to embed structured data within web pages, making it easier for search engines and other automated systems to understand the content. Microdata is often used with schemas defined by Schema.org to mark up elements like products, reviews, and events. Example:
+     ```html
+     <div itemscope itemtype="http://schema.org/Person">
+       <span itemprop="name">John Doe</span>
+       <span itemprop="jobTitle">Software Engineer</span>
+       <span itemprop="email">johndoe@example.com</span>
+     </div>
+     ```
+     Here, Microdata provides structured information about a person, which search engines can use to enhance search results.
+
+#### 105. **What is the `async` attribute in HTML5, and how does it affect script loading?**
+   - **Question:** Describe the `async` attribute in the `<script>` tag and its role in script loading.
+   - **Answer:** The `async` attribute in the `<script>` tag tells the browser to download the script in the background without blocking the page rendering process. Once the script is downloaded, it is executed immediately, which can improve page loading speed, especially for non-critical scripts. Example:
+     ```html
+     <script src="script.js" async></script>
+     ```
+     This script will be fetched asynchronously, allowing the page to continue loading while the script is being downloaded.
+
+#### 106. **What is the `defer` attribute in the `<script>` tag, and how is it different from `async`?**
+   - **Question:** Compare the `defer` and `async` attributes in the `<script>` tag in terms of script loading behavior.
+   - **Answer:** The `defer` attribute also allows the browser to download the script in the background, but unlike `async`, the script is not executed until the HTML document has been fully parsed. This ensures that scripts are executed in order and after the document is ready. Example:
+     ```html
+     <script src="script.js" defer></script>
+     ```
+     The script with `defer` will execute only after the document has been completely loaded, which is beneficial for scripts that depend on the full document being available.
+
+#### 107. **What is the difference between `localStorage` and `sessionStorage` in HTML5?**
+   - **Question:** Explain the differences between `localStorage` and `sessionStorage` in HTML5.
+   - **Answer:** Both `localStorage` and `sessionStorage` are part of the Web Storage API in HTML5, used to store data on the client side. The key difference is in their persistence:
+     - `localStorage`: Data stored in `localStorage` persists even after the browser is closed and reopened. It is scoped to the entire origin.
+     - `sessionStorage`: Data stored in `sessionStorage` is only available for the duration of the page session (i.e., as long as the browser tab is open). It is scoped to the specific tab and is cleared when the tab is closed.
+     Example:
+     ```javascript
+     localStorage.setItem('key', 'value');
+     sessionStorage.setItem('key', 'value');
+     ```
+
+#### 108. **How does the `<template>` element work in HTML5, and what are its typical use cases?**
+   - **Question:** Describe the `<template>` element in HTML5 and its use cases.
+   - **Answer:** The `<template>` element in HTML5 is used to declare HTML that is not rendered immediately when the page loads. This content remains inactive until it is activated via JavaScript, making it useful for reusable content like fragments, components, or dynamic insertion of content. Example:
+     ```html
+     <template id="my-template">
+       <div class="template-content">This is a template!</div>
+     </template>
+     <script>
+       const template = document.getElementById('my-template');
+       document.body.appendChild(template.content.cloneNode(true));
+     </script>
+     ```
+     The content inside the `<template>` element is rendered only when it is explicitly added to the DOM using JavaScript.
+
+#### 109. **What are the benefits of using the `contenteditable` attribute in HTML5?**
+   - **Question:** Explain the `contenteditable` attribute in HTML5 and its advantages.
+   - **Answer:** The `contenteditable` attribute in HTML5 allows any HTML element to be editable by the user, turning it into an interactive, editable field. This is particularly useful for implementing rich text editors or inline editing features without requiring additional JavaScript libraries. Example:
+     ```html
+     <div contenteditable="true">This text is editable!</div>
+     ```
+     When a user clicks on this div, they can edit its content directly in the browser.
+
+#### 110. **What is the `datalist` element in HTML5, and how does it enhance input fields?**
+   - **Question:** Describe the `datalist` element in HTML5 and its typical use case.
+   - **Answer:** The `datalist` element in HTML5 provides a list of predefined options for an input field, enhancing user experience by offering suggestions while typing. This is often used for autocomplete features. Example:
+     ```html
+     <input list="browsers" name="browser">
+     <datalist id="browsers">
+       <option value="Chrome">
+       <option value="Firefox">
+       <option value="Safari">
+       <option value="Edge">
+     </datalist>
+     ```
+     As the user types in the input field, they will see a dropdown list of the available options, making it easier to select a valid entry.
+
+These additional HTML5 questions focus on more advanced features and best practices, helping to solidify knowledge in HTML5 and its applications in modern web development.
+
+### HTML5 Interview Questions and Answers
+
+#### 111. **What is the purpose of the `hidden` attribute in HTML5?**
+   - **Question:** Explain the `hidden` attribute in HTML5 and how it differs from using CSS `display: none;`.
+   - **Answer:** The `hidden` attribute in HTML5 is used to hide elements from the page without deleting them from the DOM. Unlike `display: none;` in CSS, which is purely for presentation, the `hidden` attribute is a semantic way to indicate that the element is not relevant or should not be displayed. The element can be made visible by removing the `hidden` attribute via JavaScript. Example:
+     ```html
+     <div hidden>This content is hidden.</div>
+     ```
+     The `hidden` attribute is useful for toggling visibility of elements in a manner that is accessible and easily controlled via JavaScript.
+
+#### 112. **How do `audio` and `video` tags work in HTML5, and what are their common attributes?**
+   - **Question:** Describe the `audio` and `video` tags in HTML5. What are some common attributes associated with these tags?
+   - **Answer:** The `audio` and `video` tags in HTML5 are used to embed media files (sound and video) directly into web pages. They eliminate the need for third-party plugins like Flash. Common attributes include:
+     - `src`: Specifies the path to the media file.
+     - `controls`: Adds play, pause, and other controls to the media.
+     - `autoplay`: Starts playing the media as soon as it is ready.
+     - `loop`: Makes the media play in a loop.
+     - `muted`: Mutes the audio for the media.
+     - `preload`: Specifies if and how the media should be preloaded.
+     Example:
+     ```html
+     <audio src="audio.mp3" controls></audio>
+     <video src="video.mp4" controls></video>
+     ```
+     These elements allow seamless integration of multimedia content in web pages.
+
+#### 113. **What is the `srcdoc` attribute in the `<iframe>` tag, and how does it differ from `src`?**
+   - **Question:** Explain the `srcdoc` attribute in the `<iframe>` tag and its difference from the `src` attribute.
+   - **Answer:** The `srcdoc` attribute in the `<iframe>` tag allows you to define the content of the iframe directly as HTML code, rather than loading it from an external URL as with the `src` attribute. This can be useful for embedding small amounts of HTML content without creating a separate HTML file. Example:
+     ```html
+     <iframe srcdoc="<p>This is embedded HTML content.</p>"></iframe>
+     ```
+     While `src` loads content from a URL, `srcdoc` directly includes the HTML code within the tag itself.
+
+#### 114. **How can you create a responsive layout using the `viewport` meta tag in HTML5?**
+   - **Question:** What role does the `viewport` meta tag play in creating responsive layouts?
+   - **Answer:** The `viewport` meta tag controls how the content is displayed on different screen sizes, particularly on mobile devices. It allows developers to set the width of the viewport and scale it according to the device’s screen size. A typical setting is:
+     ```html
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     ```
+     This setting ensures that the width of the page matches the screen’s width and that the initial zoom level is set to 100%. It is essential for creating responsive designs that look good on both desktop and mobile devices.
+
+#### 115. **What is the `accesskey` attribute, and how can it be used to improve accessibility?**
+   - **Question:** Explain the `accesskey` attribute in HTML5 and its role in enhancing web accessibility.
+   - **Answer:** The `accesskey` attribute assigns a keyboard shortcut to an HTML element, allowing users to navigate to it quickly using their keyboard. This is particularly useful for improving accessibility, especially for users with disabilities who may rely on keyboard navigation. Example:
+     ```html
+     <button accesskey="s">Submit</button>
+     ```
+     In this example, pressing the `Alt` (or `Ctrl` + `Alt` on some systems) key along with `S` will focus on and activate the button, providing a faster way to interact with the page.
+
+#### 116. **What is the `autofocus` attribute, and when would you use it?**
+   - **Question:** Describe the `autofocus` attribute in HTML5 and provide a scenario where it is useful.
+   - **Answer:** The `autofocus` attribute automatically sets focus on a specific form element (like an input field) when the page loads. This is particularly useful in forms where you want to streamline user interaction by directing their attention immediately to a specific field. Example:
+     ```html
+     <input type="text" name="username" autofocus>
+     ```
+     Here, the username field will be automatically focused when the page loads, making it easier for the user to start typing immediately.
+
+#### 117. **What is the purpose of the `formnovalidate` attribute in HTML5 forms?**
+   - **Question:** Explain the `formnovalidate` attribute and how it is used in form submission.
+   - **Answer:** The `formnovalidate` attribute is used on a `<button>` or `<input type="submit">` element to bypass form validation when the form is submitted. This is useful when you want to provide an option to submit a form without enforcing validation rules. Example:
+     ```html
+     <form>
+       <input type="text" required>
+       <button type="submit" formnovalidate>Submit without Validation</button>
+     </form>
+     ```
+     In this example, the form can be submitted without meeting the validation requirements specified for the input fields.
+
+#### 118. **How does the `spellcheck` attribute work, and in which scenarios is it particularly useful?**
+   - **Question:** What is the `spellcheck` attribute, and how can it be beneficial in HTML5 forms?
+   - **Answer:** The `spellcheck` attribute enables or disables spell checking for text fields in HTML5. It can be particularly useful in forms where the content is expected to be text-heavy, such as comment sections, feedback forms, or text editors. Example:
+     ```html
+     <textarea spellcheck="true"></textarea>
+     ```
+     When `spellcheck` is set to `true`, the browser will underline misspelled words, helping users correct their input before submission.
+
+#### 119. **What is the `inputmode` attribute in HTML5, and how does it enhance form input?**
+   - **Question:** Explain the `inputmode` attribute in HTML5 and its impact on mobile user experience.
+   - **Answer:** The `inputmode` attribute allows developers to specify the type of virtual keyboard to display for a particular input field on mobile devices. This enhances user experience by presenting the most appropriate keyboard based on the expected input. Example:
+     ```html
+     <input type="text" inputmode="numeric">
+     ```
+     Here, setting `inputmode` to `numeric` will prompt a numeric keyboard on mobile devices, making it easier for users to enter numbers.
+
+#### 120. **How do you use the `pattern` attribute for input validation in HTML5?**
+   - **Question:** Describe the `pattern` attribute and its role in input validation.
+   - **Answer:** The `pattern` attribute in HTML5 is used to specify a regular expression that the input field’s value must match in order for the form to be submitted. This is useful for enforcing specific formats like email addresses, phone numbers, or custom validation patterns. Example:
+     ```html
+     <input type="text" pattern="[A-Za-z]{3,}" title="Three or more letters">
+     ```
+     This input field will only accept values that consist of three or more letters, and will display a validation message if the pattern is not matched.
+
+These additional HTML5 questions cover more nuanced and advanced topics, giving you a comprehensive understanding of HTML5's features and their practical applications in web development.
+
+
+### HTML5 Interview Questions and Answers
+
+#### 121. **What is the `required` attribute in HTML5, and how does it affect form elements?**
+   - **Question:** Explain the purpose of the `required` attribute in HTML5 forms. What happens when a form with a `required` field is submitted without filling it out?
+   - **Answer:** The `required` attribute in HTML5 is used to ensure that a form field is not left empty before submission. When a form with a `required` field is submitted without that field being filled, the browser will prevent the form from being submitted and typically display a validation message indicating that the field is required. This attribute is a simple yet effective way to enforce client-side validation. Example:
+     ```html
+     <input type="text" name="username" required>
+     ```
+     This input field must be filled out before the form can be submitted.
+
+#### 122. **What is the `data-*` attribute in HTML5, and how can it be used?**
+   - **Question:** Describe the `data-*` attribute in HTML5. How can developers use it in their web applications?
+   - **Answer:** The `data-*` attribute is a way to store custom data private to the page or application. It allows developers to embed custom data attributes on HTML elements, which can then be accessed using JavaScript. The `*` can be replaced with any name, which serves as the key for the data. Example:
+     ```html
+     <div data-user-id="12345">User Content</div>
+     ```
+     You can access this data using JavaScript:
+     ```javascript
+     var userId = document.querySelector('div').dataset.userId;
+     ```
+     The `data-*` attributes are useful for passing data to JavaScript without polluting the global namespace.
+
+#### 123. **How do you use the `progress` and `meter` elements in HTML5?**
+   - **Question:** Explain the difference between the `progress` and `meter` elements in HTML5 and provide examples of how they are used.
+   - **Answer:** The `progress` element is used to represent the completion progress of a task, such as a download or upload. The `meter` element, on the other hand, is used to display a scalar measurement within a known range, such as a temperature gauge or a battery level indicator.
+     - **Progress Example:**
+       ```html
+       <progress value="70" max="100"></progress>
+       ```
+       This shows a progress bar that is 70% complete.
+     - **Meter Example:**
+       ```html
+       <meter value="0.7" min="0" max="1"></meter>
+       ```
+       This displays a meter indicating a value of 0.7 within a range of 0 to 1.
+
+#### 124. **What are Web Workers in HTML5, and why are they used?**
+   - **Question:** Define Web Workers in HTML5. What problem do they solve in web development?
+   - **Answer:** Web Workers are a feature in HTML5 that allows scripts to run in the background, independent of the main browser thread. They are used to perform computationally expensive tasks, like processing large data sets, without blocking the user interface. This helps keep the UI responsive while heavy operations are being processed. Example:
+     ```javascript
+     var worker = new Worker('worker.js');
+     worker.onmessage = function(e) {
+       console.log('Message from worker:', e.data);
+     };
+     worker.postMessage('Start processing');
+     ```
+     Web Workers solve the problem of freezing or slowing down the UI by offloading intensive tasks to a separate thread.
+
+#### 125. **What is the `contenteditable` attribute in HTML5, and how is it used?**
+   - **Question:** Explain the `contenteditable` attribute in HTML5. Provide an example of its usage.
+   - **Answer:** The `contenteditable` attribute in HTML5 makes an element editable by the user. When an element is set to `contenteditable="true"`, the user can edit the content of that element directly in the browser. This is often used in web applications where users need to modify text or HTML content directly. Example:
+     ```html
+     <div contenteditable="true">Edit this text.</div>
+     ```
+     The user can click on the text and edit it as if it were a text input field.
+
+#### 126. **How does the `download` attribute in the `<a>` tag work in HTML5?**
+   - **Question:** Describe the `download` attribute in HTML5 and its purpose in the `<a>` tag.
+   - **Answer:** The `download` attribute in the `<a>` tag specifies that the target file should be downloaded when the user clicks on the hyperlink, instead of navigating to the file. You can optionally specify the name for the downloaded file. Example:
+     ```html
+     <a href="example.pdf" download="myfile.pdf">Download PDF</a>
+     ```
+     When the link is clicked, the browser will download the file as `myfile.pdf` instead of opening it.
+
+#### 127. **What is the `autocapitalize` attribute in HTML5, and how is it used?**
+   - **Question:** Explain the `autocapitalize` attribute in HTML5 and its possible values.
+   - **Answer:** The `autocapitalize` attribute is used in form inputs and text areas to control the capitalization of text. This attribute can be particularly useful in mobile contexts where automatic capitalization can influence user input. Possible values include:
+     - `none`: No automatic capitalization.
+     - `sentences`: Capitalizes the first letter of each sentence.
+     - `words`: Capitalizes the first letter of each word.
+     - `characters`: Capitalizes all characters.
+     Example:
+     ```html
+     <input type="text" autocapitalize="words">
+     ```
+     This input field will automatically capitalize the first letter of each word as the user types.
+
+#### 128. **What is the `sandbox` attribute in the `<iframe>` tag, and what are its benefits?**
+   - **Question:** Describe the `sandbox` attribute in the `<iframe>` tag. What security benefits does it provide?
+   - **Answer:** The `sandbox` attribute in the `<iframe>` tag is used to apply restrictions on the content inside the iframe, enhancing security. By default, the iframe content is isolated, preventing scripts from executing or forms from being submitted. The attribute can be customized with various values to allow or restrict specific actions:
+     - `allow-same-origin`: Allows content to be treated as being from the same origin.
+     - `allow-scripts`: Allows scripts to run.
+     - `allow-forms`: Allows forms to be submitted.
+     Example:
+     ```html
+     <iframe src="example.html" sandbox="allow-scripts allow-same-origin"></iframe>
+     ```
+     Using the `sandbox` attribute helps protect against malicious content embedded in iframes.
+
+#### 129. **How does the `manifest` attribute work in HTML5, and what is its purpose?**
+   - **Question:** Explain the `manifest` attribute in HTML5 and its role in web applications.
+   - **Answer:** The `manifest` attribute in HTML5 is used to specify a URL for a cache manifest file. This file lists resources that should be cached by the browser for offline use. When the web application is accessed, these resources are downloaded and cached according to the manifest, enabling offline access to the application. Example:
+     ```html
+     <html manifest="app.manifest">
+     ```
+     The manifest file (`app.manifest`) might look like this:
+     ```
+     CACHE MANIFEST
+     /css/styles.css
+     /js/scripts.js
+     /images/logo.png
+     ```
+     The `manifest` attribute is essential for building offline web applications.
+
+#### 130. **What are the different states of a `<button>` element, and how do they affect user interaction?**
+   - **Question:** Discuss the different states a `<button>` element can have in HTML5.
+   - **Answer:** A `<button>` element in HTML5 can have several states that affect how users interact with it:
+     - **Enabled:** The button is active and can be clicked by the user.
+     - **Disabled:** The button is inactive and cannot be clicked, often styled with a grayed-out appearance. This state is controlled by the `disabled` attribute.
+     - **Pressed (active):** The button is being clicked, providing visual feedback that the button is pressed down.
+     Example:
+     ```html
+     <button disabled>Cannot Click</button>
+     ```
+     These states are important for managing user interactions and guiding users through the interface.
+
+These additional HTML5 questions cover advanced aspects of HTML5 elements, attributes, and their application in modern web development, providing a deep understanding of the capabilities HTML5 offers.
+
+
+### HTML5 Interview Questions and Answers
+
+#### 131. **What is the `srcset` attribute in HTML5, and how is it used with the `<img>` tag?**
+   - **Question:** Explain the purpose of the `srcset` attribute in HTML5 and how it enhances image responsiveness.
+   - **Answer:** The `srcset` attribute in the `<img>` tag allows developers to specify multiple image sources with different resolutions or sizes, which the browser can choose from based on the device's screen size or resolution. This enhances image responsiveness by serving the most appropriate image to the user, improving performance and visual quality. Example:
+     ```html
+     <img src="small.jpg" srcset="large.jpg 1024w, medium.jpg 640w, small.jpg 320w" alt="Responsive Image">
+     ```
+     In this example, the browser selects the best image based on the screen's width.
+
+#### 132. **What is the `picture` element in HTML5, and how does it differ from the `srcset` attribute?**
+   - **Question:** Describe the `picture` element in HTML5 and how it provides more flexibility than the `srcset` attribute.
+   - **Answer:** The `picture` element in HTML5 provides a way to specify multiple image sources for different scenarios, such as different screen sizes, resolutions, or media conditions. It differs from the `srcset` attribute in that it allows for conditional rendering of images based on media queries, offering more flexibility. Example:
+     ```html
+     <picture>
+       <source media="(min-width: 800px)" srcset="large.jpg">
+       <source media="(min-width: 400px)" srcset="medium.jpg">
+       <img src="small.jpg" alt="Responsive Image">
+     </picture>
+     ```
+     This example uses different images depending on the viewport width.
+
+#### 133. **What is the purpose of the `autocomplete` attribute in HTML5 forms?**
+   - **Question:** Explain the `autocomplete` attribute in HTML5. How does it improve user experience in forms?
+   - **Answer:** The `autocomplete` attribute in HTML5 controls whether a form or an individual input field should have autocomplete enabled. Autocomplete allows the browser to automatically fill in values for fields based on the user's previous entries. This improves user experience by reducing the time it takes to fill out forms. The attribute can be set to `on` or `off`. Example:
+     ```html
+     <form autocomplete="on">
+       <input type="text" name="name" autocomplete="name">
+     </form>
+     ```
+     This form allows the browser to autocomplete the user's name based on prior entries.
+
+#### 134. **How does the `form` attribute work in HTML5, and what problem does it solve?**
+   - **Question:** Describe the `form` attribute in HTML5 and its usage. What problem does it address in form management?
+   - **Answer:** The `form` attribute in HTML5 allows form controls to be associated with a form element even if they are not nested within it. This solves the problem of needing to place form elements inside a form tag, providing more flexibility in page layout and structure. Example:
+     ```html
+     <form id="myForm" action="/submit">
+       <input type="text" name="username">
+     </form>
+     <input type="submit" form="myForm" value="Submit">
+     ```
+     The `form` attribute links the submit button to the form with `id="myForm"`.
+
+#### 135. **What is the `novalidate` attribute in HTML5 forms, and when would you use it?**
+   - **Question:** Explain the `novalidate` attribute in HTML5 forms. What is its purpose and when might it be used?
+   - **Answer:** The `novalidate` attribute is used in HTML5 forms to disable the browser's automatic form validation. When applied, it prevents the browser from checking the form's fields for validation constraints like `required`, `pattern`, or `type`. This can be useful when you want to handle validation entirely with custom JavaScript. Example:
+     ```html
+     <form novalidate>
+       <input type="email" required>
+       <button type="submit">Submit</button>
+     </form>
+     ```
+     This form won't trigger HTML5 validation when submitted, allowing for custom validation logic.
+
+#### 136. **What is the `formaction` attribute in HTML5, and how does it differ from the `action` attribute?**
+   - **Question:** Describe the `formaction` attribute in HTML5. How does it differ from the `action` attribute, and when would you use it?
+   - **Answer:** The `formaction` attribute in HTML5 is used on `<button>` or `<input type="submit">` elements to specify a URL where the form data should be submitted when that button is clicked. It overrides the `action` attribute of the `<form>` element for that specific button, allowing different submit buttons to send the form data to different URLs. Example:
+     ```html
+     <form action="/default-action">
+       <input type="text" name="username">
+       <button type="submit" formaction="/custom-action">Submit to Custom URL</button>
+     </form>
+     ```
+     The form will submit to `/custom-action` when the specific button is clicked.
+
+#### 137. **What is the `inputmode` attribute in HTML5, and how does it enhance user input?**
+   - **Question:** Explain the `inputmode` attribute in HTML5. How does it improve the user experience on mobile devices?
+   - **Answer:** The `inputmode` attribute in HTML5 specifies what kind of virtual keyboard should be displayed for an input field, enhancing the user experience by providing the most appropriate keyboard for the data being entered. It is especially useful on mobile devices. For example:
+     - `numeric`: Shows a numeric keypad.
+     - `tel`: Shows a keypad for telephone numbers.
+     - `email`: Shows a keyboard optimized for entering email addresses.
+     Example:
+     ```html
+     <input type="text" inputmode="numeric">
+     ```
+     This input field will prompt a numeric keypad on mobile devices.
+
+#### 138. **What is the `multiple` attribute in the `<input>` tag, and how is it used in file uploads?**
+   - **Question:** Describe the `multiple` attribute in the `<input>` tag. How does it work with file inputs?
+   - **Answer:** The `multiple` attribute in the `<input>` tag allows the user to select more than one file when using the file input type (`<input type="file">`). When `multiple` is applied, users can choose multiple files in the file selection dialog. Example:
+     ```html
+     <input type="file" name="files" multiple>
+     ```
+     This allows the user to upload several files at once.
+
+#### 139. **What is the `spellcheck` attribute in HTML5, and when would you use it?**
+   - **Question:** Explain the `spellcheck` attribute in HTML5. What is its purpose, and in what scenarios might it be useful?
+   - **Answer:** The `spellcheck` attribute in HTML5 enables or disables spelling and grammar checking for text inputs and text areas. It can be set to `true` or `false`. This attribute is useful when you want to ensure correct spelling and grammar in certain input fields (e.g., comment sections) or disable it where it might be unnecessary (e.g., code inputs). Example:
+     ```html
+     <textarea spellcheck="true"></textarea>
+     ```
+     This text area will have spell checking enabled.
+
+#### 140. **How does the `oninput` event differ from the `onchange` event in HTML5?**
+   - **Question:** Compare the `oninput` and `onchange` events in HTML5. When would you use each?
+   - **Answer:** The `oninput` event in HTML5 triggers every time the value of an input or textarea changes, whereas the `onchange` event only triggers when the input loses focus after the value has been modified. The `oninput` event is ideal for real-time feedback, such as live search suggestions, while `onchange` is better for actions that should only occur after the user has finished editing. Example:
+     ```html
+     <input type="text" oninput="console.log(this.value)">
+     <input type="text" onchange="console.log(this.value)">
+     ```
+     The first input logs the value on every keystroke, while the second logs it only when focus is lost.
+
+These questions continue to delve deeper into the advanced features of HTML5, exploring attributes, events, and elements that provide significant flexibility and control over web development tasks.
+
+### HTML5 Interview Questions and Answers
+
+#### 141. **What is the purpose of the `<datalist>` element in HTML5?**
+   - **Question:** Describe the `<datalist>` element in HTML5 and explain how it enhances user input.
+   - **Answer:** The `<datalist>` element in HTML5 provides a list of predefined options for an `<input>` element, creating a dropdown menu of suggestions that users can select from while typing in the input field. This enhances user input by providing a set of valid choices, improving accuracy and efficiency. Example:
+     ```html
+     <input list="browsers" name="browser" id="browser">
+     <datalist id="browsers">
+       <option value="Chrome">
+       <option value="Firefox">
+       <option value="Safari">
+       <option value="Edge">
+     </datalist>
+     ```
+     The user can type in the input field and choose from the suggested options provided in the datalist.
+
+#### 142. **What is the difference between the `<b>` and `<strong>` tags in HTML5?**
+   - **Question:** Compare the `<b>` and `<strong>` tags in HTML5. What is the semantic difference between them?
+   - **Answer:** Both `<b>` and `<strong>` tags visually bold the enclosed text. However, the `<strong>` tag is semantically stronger, indicating that the enclosed text is of greater importance. The `<b>` tag, on the other hand, is purely for stylistic purposes without adding any semantic meaning. Example:
+     ```html
+     <p>This is <b>bold</b> text.</p>
+     <p>This is <strong>important</strong> text.</p>
+     ```
+     While both tags result in bold text, screen readers may emphasize the `<strong>` tag, indicating its importance to users.
+
+#### 143. **What are `microdata` in HTML5, and how do they enhance web content?**
+   - **Question:** Explain the concept of `microdata` in HTML5 and describe how they improve the semantics and usability of web content.
+   - **Answer:** Microdata is a specification in HTML5 that allows embedding machine-readable data into web content using specific attributes (`itemscope`, `itemtype`, `itemprop`). This structured data improves how search engines and other tools understand and index content, enhancing SEO and content usability. Example:
+     ```html
+     <div itemscope itemtype="http://schema.org/Person">
+       <span itemprop="name">John Doe</span>
+       <span itemprop="jobTitle">Software Engineer</span>
+     </div>
+     ```
+     This microdata provides structured information about a person, making it easier for search engines to categorize and display it.
+
+#### 144. **How does the `hidden` attribute in HTML5 work, and when would you use it?**
+   - **Question:** Describe the `hidden` attribute in HTML5. What does it do, and in what scenarios is it useful?
+   - **Answer:** The `hidden` attribute in HTML5 is a boolean attribute that makes an element not visible to the user, effectively removing it from the document flow. This attribute is useful when you need to hide content that might be shown later via JavaScript or CSS. Example:
+     ```html
+     <p hidden>This paragraph is hidden.</p>
+     ```
+     The paragraph is hidden from view but can be made visible by removing the `hidden` attribute or using JavaScript.
+
+#### 145. **What are `custom data attributes` in HTML5, and how do they work?**
+   - **Question:** Explain what custom data attributes are in HTML5 and provide an example of how they might be used.
+   - **Answer:** Custom data attributes in HTML5 allow developers to store extra information on standard HTML elements using attributes that begin with `data-`. These attributes can be accessed and manipulated using JavaScript, providing a way to store custom data without affecting the element’s presentation. Example:
+     ```html
+     <div data-user-id="12345" data-role="admin">John Doe</div>
+     ```
+     In this example, `data-user-id` and `data-role` are custom data attributes that can be accessed with JavaScript, e.g., `element.dataset.userId`.
+
+#### 146. **What is the `progress` element in HTML5, and how is it used?**
+   - **Question:** Describe the `<progress>` element in HTML5. What is its purpose, and how is it implemented?
+   - **Answer:** The `<progress>` element in HTML5 represents the completion progress of a task, such as a download or file upload. It visually displays the progress to the user and can be controlled with JavaScript. Example:
+     ```html
+     <progress value="70" max="100">70%</progress>
+     ```
+     This progress bar shows that 70% of the task is complete. The `value` attribute indicates the current progress, while `max` specifies the total amount.
+
+#### 147. **What is the `output` element in HTML5, and when would you use it?**
+   - **Question:** Explain the `<output>` element in HTML5. How is it typically used in web forms?
+   - **Answer:** The `<output>` element in HTML5 is used to display the result of a calculation or user action within a form. It’s often paired with JavaScript to show results in real-time based on user input. Example:
+     ```html
+     <form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+       <input type="number" id="a" value="0"> +
+       <input type="number" id="b" value="0">
+       <output name="result" for="a b">0</output>
+     </form>
+     ```
+     The `output` element here shows the sum of two input fields, updating automatically as the user types.
+
+#### 148. **How do you create a `modal` dialog in HTML5, and what attributes are important?**
+   - **Question:** Describe how to create a modal dialog in HTML5. Which elements and attributes are crucial for this implementation?
+   - **Answer:** A modal dialog in HTML5 can be created using the `<dialog>` element, which represents a dialog box or other interactive component. The `open` attribute is crucial to display the modal. Example:
+     ```html
+     <dialog id="myModal">
+       <p>This is a modal dialog</p>
+       <button onclick="document.getElementById('myModal').close()">Close</button>
+     </dialog>
+     <button onclick="document.getElementById('myModal').showModal()">Open Modal</button>
+     ```
+     The `showModal()` method displays the modal, while the `close()` method hides it.
+
+#### 149. **What is the purpose of the `mark` element in HTML5, and how is it used?**
+   - **Question:** Explain the `<mark>` element in HTML5 and provide a scenario where it might be useful.
+   - **Answer:** The `<mark>` element in HTML5 is used to highlight text that is of particular relevance or importance within the context. It renders the text with a yellow background by default, making it stand out. Example:
+     ```html
+     <p>The <mark>highlighted text</mark> is important for the reader.</p>
+     ```
+     This element is useful in search results or annotations to emphasize certain words or phrases.
+
+#### 150. **What is the `preload` attribute in the `<video>` element, and what are its possible values?**
+   - **Question:** Describe the `preload` attribute in the `<video>` element in HTML5. What options are available, and how do they affect video loading?
+   - **Answer:** The `preload` attribute in the `<video>` element controls whether and how the video should be preloaded when the page loads. It has three possible values:
+     - `none`: The video is not preloaded.
+     - `metadata`: Only metadata (e.g., video length, dimensions) is preloaded.
+     - `auto`: The entire video file is preloaded.
+     Example:
+     ```html
+     <video src="movie.mp4" preload="auto" controls></video>
+     ```
+     This video will be fully preloaded when the page loads, ensuring quicker playback.
+
+These questions and answers delve into more advanced and lesser-known features of HTML5, giving you a deeper understanding of the language's capabilities and nuances.
