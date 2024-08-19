@@ -51,7 +51,7 @@
 * [AWS](aws-interview-questions-answers.md)
 * [GCP](README.md)
 * [Azure](README.md)
-* [Git](README.md)
+* [Git](git-interview-questions-answers.md)
 * [Docker](README.md)
 * [Kubernetes](README.md)
 
