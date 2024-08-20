@@ -11,7 +11,7 @@
 * [React.js](react-js-interview-questions-answers.md)
 * [Next.js](next-js-interview-questions-answers.md)
 * [Redux](redux-interview-questions-answers.md)
-* [Angular](README.md)
+* [Angular](angular-interview-questions-answers.md)
 * [Vue.js](README.md)
 * [Nuxt.js](README.md)
 * [Bootstrap](README.md)
