@@ -1385,3 +1385,1803 @@ Routing guards in Angular are services that control navigation to and from route
    ```
 
 ---
+### Angular Interview Questions and Answers (Starting from 79)
+
+---
+
+**79. What are Angular modules, and how do they help in organizing an application?**
+
+Angular modules, often referred to as `NgModules`, are containers that group related components, directives, pipes, and services together. They help organize an Angular application by allowing developers to structure the application into cohesive blocks of functionality.
+
+**Key Points:**
+
+1. **Root Module**: Every Angular application has at least one module, the root module (usually `AppModule`), which bootstraps the application.
+
+   ```typescript
+   @NgModule({
+     declarations: [AppComponent],
+     imports: [BrowserModule, FormsModule],
+     bootstrap: [AppComponent],
+   })
+   export class AppModule {}
+   ```
+
+2. **Feature Modules**: These modules are created to encapsulate different features of an application. For example, a `UserModule` might manage everything related to user management.
+
+   ```typescript
+   @NgModule({
+     declarations: [UserComponent],
+     imports: [CommonModule],
+     exports: [UserComponent],
+   })
+   export class UserModule {}
+   ```
+
+3. **Shared Modules**: These contain common components, directives, and pipes used across multiple modules. Shared modules help avoid code duplication.
+
+   ```typescript
+   @NgModule({
+     declarations: [SharedComponent],
+     imports: [CommonModule],
+     exports: [SharedComponent, CommonModule],
+   })
+   export class SharedModule {}
+   ```
+
+4. **Core Modules**: The core module is typically used to provide services that should be instantiated only once, such as singletons.
+
+   ```typescript
+   @NgModule({
+     providers: [AuthService],
+   })
+   export class CoreModule {}
+   ```
+
+Modules help in structuring large applications by separating functionality into different modules, promoting code reusability, maintainability, and easy testing.
+
+---
+
+**80. What is Ahead-of-Time (AOT) Compilation in Angular, and what are its benefits?**
+
+Ahead-of-Time (AOT) Compilation is a process in Angular where the Angular compiler converts the Angular HTML and TypeScript code into efficient JavaScript code during the build phase, before the browser downloads and runs the code.
+
+**Benefits of AOT Compilation:**
+
+1. **Faster Rendering**: The browser downloads a pre-compiled version of the application, which renders immediately without needing to compile the code at runtime.
+
+2. **Smaller Angular Framework**: AOT reduces the size of the Angular framework, as it does not need to include the compiler.
+
+3. **Fewer HTTP Requests**: AOT inlines external HTML and CSS files within the application’s JavaScript, reducing the number of HTTP requests.
+
+4. **Earlier Detection of Template Errors**: AOT detects and reports template binding errors during the build process, rather than at runtime.
+
+5. **Better Security**: AOT compilation compiles templates into JavaScript and removes HTML templates, reducing the chances of injection attacks.
+
+To enable AOT in an Angular project:
+
+```bash
+ng build --aot
+```
+
+AOT compilation is recommended for production builds to improve performance and security.
+
+---
+
+**81. What is the difference between Angular's `ngOnInit` and constructor?**
+
+In Angular, both the `constructor` and `ngOnInit` methods are used for initialization, but they serve different purposes.
+
+1. **Constructor**:
+   - The `constructor` is a default TypeScript method used to initialize class members and inject dependencies.
+   - It is called when the component is instantiated.
+   - It should not contain any Angular logic, such as interacting with services or DOM elements, because at this point, the component's inputs and outputs are not yet available.
+
+   ```typescript
+   constructor(private service: SomeService) {
+     // Constructor logic here (like initializing variables)
+   }
+   ```
+
+2. **ngOnInit**:
+   - `ngOnInit` is a lifecycle hook provided by Angular.
+   - It is called after the constructor, and after Angular has initialized the component's input properties.
+   - It is the preferred place to write initialization logic, such as fetching data from a service, that depends on the component's input properties.
+
+   ```typescript
+   ngOnInit(): void {
+     // Angular initialization logic here (like making API calls)
+   }
+   ```
+
+**Summary**: Use the `constructor` for dependency injection and simple initialization, and `ngOnInit` for complex initialization and Angular-specific tasks.
+
+---
+
+**82. What are pipes in Angular, and how do you create a custom pipe?**
+
+Pipes in Angular are used to transform data in the template. They are similar to filters in other frameworks. Angular provides built-in pipes like `DatePipe`, `UpperCasePipe`, `LowerCasePipe`, etc., and also allows the creation of custom pipes.
+
+**Creating a Custom Pipe:**
+
+1. Generate a pipe using the Angular CLI:
+
+   ```bash
+   ng generate pipe custom
+   ```
+
+2. Implement the custom pipe logic.
+
+   ```typescript
+   @Pipe({
+     name: 'customPipe',
+   })
+   export class CustomPipe implements PipeTransform {
+     transform(value: string): string {
+       // Custom transformation logic
+       return value.toUpperCase();
+     }
+   }
+   ```
+
+3. Use the custom pipe in the template.
+
+   ```html
+   <p>{{ 'hello world' | customPipe }}</p>
+   ```
+
+   The output would be: `HELLO WORLD`.
+
+**Pipes can be classified into:**
+
+1. **Pure Pipes**: These pipes are stateless, meaning they depend only on their input value and return the same output for the same input.
+2. **Impure Pipes**: These pipes can detect changes in mutable objects and perform transformations even when the reference hasn’t changed.
+
+By default, Angular pipes are pure, and if you want to create an impure pipe, you can set `pure: false` in the `@Pipe` decorator.
+
+---
+
+**83. What is Angular's `ngOnChanges` lifecycle hook?**
+
+`ngOnChanges` is a lifecycle hook in Angular that is called before `ngOnInit` and whenever one or more input properties of a component or directive change.
+
+**Key Points:**
+
+- `ngOnChanges` receives an object `SimpleChanges` which contains the current and previous values of the changed properties.
+- It is particularly useful when a component depends on the changes of its input properties to perform certain tasks.
+
+**Example:**
+
+```typescript
+@Component({
+  selector: 'app-example',
+  template: `<p>{{data}}</p>`,
+})
+export class ExampleComponent implements OnChanges {
+  @Input() data: string;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data']) {
+      console.log('Previous:', changes['data'].previousValue);
+      console.log('Current:', changes['data'].currentValue);
+    }
+  }
+}
+```
+
+Whenever the `data` input changes, `ngOnChanges` is triggered, and you can react to the change accordingly.
+
+---
+
+**84. How does Angular's `ng-content` work, and what is content projection?**
+
+`ng-content` is an Angular directive used for content projection, allowing you to insert and display external content within a component's template.
+
+**Content Projection:**
+
+Content projection is a pattern in Angular that allows you to pass content from a parent component to a child component and display it in predefined spots within the child's template.
+
+**Basic Example:**
+
+1. In the child component's template, use `ng-content`.
+
+   ```html
+   <div class="card">
+     <ng-content></ng-content>
+   </div>
+   ```
+
+2. In the parent component, pass content to the child component.
+
+   ```html
+   <app-child>
+     <p>This content is projected into the child component.</p>
+   </app-child>
+   ```
+
+3. The child component will display the content passed by the parent.
+
+**Multi-slot Content Projection:**
+
+Angular also supports projecting content into multiple slots using selectors.
+
+```html
+<!-- child component -->
+<div class="header">
+  <ng-content select="[header]"></ng-content>
+</div>
+<div class="body">
+  <ng-content select="[body]"></ng-content>
+</div>
+```
+
+```html
+<!-- parent component -->
+<app-child>
+  <h1 header>Header Content</h1>
+  <p body>Body Content</p>
+</app-child>
+```
+
+This approach allows for more flexible component designs, making it easy to customize content.
+
+---
+
+**85. What is Angular's `trackBy` function, and why is it important in `ngFor`?**
+
+The `trackBy` function in Angular is used in conjunction with the `ngFor` directive to improve performance by helping Angular identify items in a list that have changed.
+
+**Why is it important?**
+
+- By default, Angular re-renders the entire list when items are added or removed.
+- Using `trackBy`, Angular can keep track of items by a unique identifier (like an ID) and only re-render the items that have changed, instead of the entire list.
+
+**Example:**
+
+```typescript
+@Component({
+  selector: 'app-list',
+  template: `
+    <ul>
+      <li *ngFor="let item of items; trackBy: trackById">{{ item.name }}</li>
+    </ul>
+  `,
+})
+export class ListComponent {
+  items = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+  ];
+
+  trackById(index: number, item: any): number {
+    return item.id;
+  }
+}
+```
+
+In this example, Angular uses the `id` of each item to track changes. If an item is added, removed, or modified, only the affected items are re-rendered.
+
+### Angular Interview Questions and Answers (Starting from 86)
+
+---
+
+**86. What is Angular Universal, and how does it benefit Angular applications?**
+
+Angular Universal is a technology that enables server-side rendering (SSR) for Angular applications. It allows Angular applications to be rendered on the server, generating static HTML before sending it to the client.
+
+**Benefits of Angular Universal:**
+
+1. **Improved SEO**: Search engines can crawl the fully rendered HTML, making it easier to index and improve search rankings.
+
+2. **Faster Initial Load**: Users see a fully rendered page faster, as the content is generated on the server and sent directly to the browser, reducing the time to first paint.
+
+3. **Better Performance on Slow Connections**: Since the server sends a fully rendered page, users on slower networks experience better performance as the browser doesn't need to render the page client-side initially.
+
+4. **Social Media Sharing**: When sharing links on social media, Angular Universal ensures that the correct metadata is included in the static HTML, improving how shared content appears.
+
+**How to Implement Angular Universal:**
+
+1. **Add Angular Universal to Your Project:**
+
+   ```bash
+   ng add @nguniversal/express-engine
+   ```
+
+2. **Build the Application:**
+
+   ```bash
+   npm run build:ssr
+   ```
+
+3. **Serve the Application:**
+
+   ```bash
+   npm run serve:ssr
+   ```
+
+This will start the server and render your Angular application on the server before sending it to the client.
+
+---
+
+**87. What is Angular's `Injector` and how does dependency injection work?**
+
+Angular's `Injector` is a key part of Angular's dependency injection (DI) system. It is responsible for creating and managing the instances of services and other dependencies that a component or service may require.
+
+**Dependency Injection in Angular:**
+
+1. **Providers**: Services are registered with Angular’s dependency injection system using providers. These can be specified at different levels such as component, module, or root.
+
+   ```typescript
+   @Injectable({
+     providedIn: 'root',
+   })
+   export class MyService {}
+   ```
+
+2. **Injecting Dependencies**: Dependencies are injected into components or services via the constructor.
+
+   ```typescript
+   constructor(private myService: MyService) {}
+   ```
+
+3. **Hierarchical Injectors**: Angular has a hierarchical DI system, meaning there can be multiple injectors. The root injector provides dependencies to the entire application, but you can also have child injectors at the component or module level, which can override services provided by parent injectors.
+
+4. **Injector Class**: The `Injector` class allows manual retrieval of a service instance.
+
+   ```typescript
+   constructor(private injector: Injector) {
+     const service = this.injector.get(MyService);
+   }
+   ```
+
+Angular’s DI system promotes loose coupling and enhances testability by allowing easy mocking or replacing of dependencies.
+
+---
+
+**88. How does Angular handle HTTP requests, and what is `HttpClientModule`?**
+
+Angular provides the `HttpClientModule` to handle HTTP requests. It is a part of the `@angular/common/http` package and is the recommended way to make HTTP requests in Angular applications.
+
+**Using `HttpClientModule`:**
+
+1. **Import the Module**: First, import `HttpClientModule` in your application module.
+
+   ```typescript
+   import { HttpClientModule } from '@angular/common/http';
+
+   @NgModule({
+     imports: [HttpClientModule],
+   })
+   export class AppModule {}
+   ```
+
+2. **Inject `HttpClient` in a Service**:
+
+   ```typescript
+   import { HttpClient } from '@angular/common/http';
+
+   @Injectable({
+     providedIn: 'root',
+   })
+   export class DataService {
+     constructor(private http: HttpClient) {}
+
+     getData() {
+       return this.http.get('https://api.example.com/data');
+     }
+   }
+   ```
+
+3. **Making HTTP Requests**:
+   - **GET Request**: Fetch data from the server.
+   - **POST Request**: Send data to the server.
+   - **PUT/PATCH Request**: Update data on the server.
+   - **DELETE Request**: Delete data from the server.
+
+   ```typescript
+   this.http.get('https://api.example.com/data').subscribe((data) => {
+     console.log(data);
+   });
+   ```
+
+4. **Handling Errors**: Use the `catchError` operator to handle HTTP errors.
+
+   ```typescript
+   this.http.get('https://api.example.com/data').pipe(
+     catchError((error: HttpErrorResponse) => {
+       return throwError(() => new Error(error.message));
+     })
+   );
+   ```
+
+5. **Interceptors**: Angular allows you to create interceptors to modify HTTP requests and responses globally, such as adding authentication tokens or handling errors.
+
+---
+
+**89. What is Angular's Router, and how do you define routes in Angular?**
+
+Angular's Router is a powerful feature that allows for navigation between views or components based on the application's state or URL. It enables single-page application (SPA) functionality.
+
+**Defining Routes in Angular:**
+
+1. **Import the RouterModule**:
+
+   ```typescript
+   import { RouterModule, Routes } from '@angular/router';
+   import { NgModule } from '@angular/core';
+   import { HomeComponent } from './home/home.component';
+   import { AboutComponent } from './about/about.component';
+
+   const routes: Routes = [
+     { path: '', component: HomeComponent },
+     { path: 'about', component: AboutComponent },
+   ];
+
+   @NgModule({
+     imports: [RouterModule.forRoot(routes)],
+     exports: [RouterModule],
+   })
+   export class AppRoutingModule {}
+   ```
+
+2. **Configure the Router**: Define the routes and their corresponding components.
+
+   - **Path**: The URL path that triggers the route.
+   - **Component**: The component to be displayed when the route is activated.
+   - **Redirects**: You can set up redirects if needed.
+
+   ```typescript
+   const routes: Routes = [
+     { path: '', redirectTo: '/home', pathMatch: 'full' },
+     { path: 'home', component: HomeComponent },
+     { path: 'about', component: AboutComponent },
+   ];
+   ```
+
+3. **Router Outlet**: In your template, use the `<router-outlet></router-outlet>` directive to specify where the routed component should be displayed.
+
+   ```html
+   <nav>
+     <a routerLink="/home">Home</a>
+     <a routerLink="/about">About</a>
+   </nav>
+
+   <router-outlet></router-outlet>
+   ```
+
+4. **Navigation**: You can navigate programmatically using the `Router` service.
+
+   ```typescript
+   constructor(private router: Router) {}
+
+   navigateToAbout() {
+     this.router.navigate(['/about']);
+   }
+   ```
+
+5. **Route Guards**: Angular provides route guards to control access to certain routes based on conditions like authentication.
+
+The Router enables building scalable and maintainable SPAs with clean, intuitive navigation patterns.
+
+---
+
+**90. How does Angular handle forms, and what is the difference between Template-Driven and Reactive Forms?**
+
+Angular provides two ways to handle forms: Template-Driven Forms and Reactive Forms. Both approaches are built on the same underlying API but differ in how the form model is defined and managed.
+
+**Template-Driven Forms:**
+
+1. **Declarative Approach**: The form structure and logic are primarily defined in the template using directives like `ngModel`.
+
+2. **Simple to Use**: Template-Driven Forms are easy to use for simple forms and are more suitable for simpler, smaller applications.
+
+3. **Two-Way Data Binding**: The `ngModel` directive is used for two-way data binding between the form input and the model.
+
+4. **Validation**: Validators are applied directly in the template.
+
+   ```html
+   <form #form="ngForm">
+     <input type="text" name="name" [(ngModel)]="name" required />
+     <div *ngIf="form.controls.name?.invalid">Name is required</div>
+   </form>
+   ```
+
+**Reactive Forms:**
+
+1. **Programmatic Approach**: The form structure and logic are defined in the component using `FormGroup` and `FormControl`.
+
+2. **More Control**: Reactive Forms offer more control and flexibility, making them suitable for complex and dynamic forms.
+
+3. **Explicit Data Binding**: Form controls are explicitly linked to the model using `FormControl`.
+
+4. **Validation**: Validators are applied directly in the component.
+
+   ```typescript
+   this.form = new FormGroup({
+     name: new FormControl('', Validators.required),
+   });
+   ```
+
+   ```html
+   <form [formGroup]="form">
+     <input type="text" formControlName="name" />
+     <div *ngIf="form.get('name').invalid">Name is required</div>
+   </form>
+   ```
+
+**Key Differences:**
+
+- **Template-Driven Forms** are simple and easy to use but offer less control and flexibility.
+- **Reactive Forms** provide more control, better scalability, and are more testable, making them the preferred choice for complex forms.
+
+Angular's form handling features, including built-in validation, custom validators, and form controls, enable the creation of robust, user-friendly forms.
+
+### Angular Interview Questions and Answers (Starting from 91)
+
+---
+
+**91. What are Angular Pipes, and how do you create a custom pipe?**
+
+Angular Pipes are a way to transform data in your templates. They take in data as input and return a transformed version of that data. Angular provides several built-in pipes, such as `DatePipe`, `UpperCasePipe`, `LowerCasePipe`, and `CurrencyPipe`. Additionally, you can create custom pipes to suit specific needs.
+
+**Creating a Custom Pipe:**
+
+1. **Generate the Pipe**:
+
+   You can generate a custom pipe using the Angular CLI:
+
+   ```bash
+   ng generate pipe customPipe
+   ```
+
+2. **Implement the Pipe**:
+
+   Implement the `transform` method in the generated pipe class. This method will define how the input is transformed.
+
+   ```typescript
+   import { Pipe, PipeTransform } from '@angular/core';
+
+   @Pipe({
+     name: 'customPipe',
+   })
+   export class CustomPipe implements PipeTransform {
+     transform(value: string, ...args: any[]): string {
+       return value.toUpperCase(); // Example: Converts the input to uppercase
+     }
+   }
+   ```
+
+3. **Use the Pipe in a Template**:
+
+   Once created, you can use the custom pipe in your templates like any other pipe.
+
+   ```html
+   <p>{{ 'hello world' | customPipe }}</p> <!-- Output: HELLO WORLD -->
+   ```
+
+**Built-In Pipes**:
+
+Angular comes with a variety of built-in pipes, including:
+
+- **DatePipe**: Formats dates.
+- **UpperCasePipe**: Converts text to uppercase.
+- **LowerCasePipe**: Converts text to lowercase.
+- **CurrencyPipe**: Formats numbers as currency.
+
+---
+
+**92. What are Angular Directives, and what is the difference between structural and attribute directives?**
+
+Angular Directives are special markers in the DOM that tell Angular to perform certain actions or behaviors on DOM elements.
+
+**Types of Directives:**
+
+1. **Structural Directives**:
+
+   Structural directives change the structure of the DOM by adding or removing elements. They typically have an asterisk (`*`) prefix.
+
+   Examples:
+   - **`ngIf`**: Conditionally includes or excludes an element.
+   - **`ngFor`**: Repeats an element for each item in a list.
+   - **`ngSwitch`**: Switches between alternative views.
+
+   ```html
+   <div *ngIf="isVisible">Visible Content</div>
+   <ul>
+     <li *ngFor="let item of items">{{ item }}</li>
+   </ul>
+   ```
+
+2. **Attribute Directives**:
+
+   Attribute directives change the appearance or behavior of an element, component, or another directive. They do not change the structure of the DOM.
+
+   Examples:
+   - **`ngClass`**: Adds or removes a set of CSS classes.
+   - **`ngStyle`**: Adds or removes a set of styles.
+
+   ```html
+   <div [ngClass]="{'active': isActive}">Content</div>
+   <div [ngStyle]="{'color': isActive ? 'blue' : 'red'}">Styled Content</div>
+   ```
+
+**Difference Between Structural and Attribute Directives**:
+
+- **Structural Directives**: Modify the DOM structure by adding, removing, or manipulating elements. Examples: `*ngIf`, `*ngFor`.
+- **Attribute Directives**: Modify the appearance or behavior of an element without altering the DOM structure. Examples: `ngClass`, `ngStyle`.
+
+---
+
+**93. What is Angular Change Detection, and how does it work?**
+
+Angular's Change Detection mechanism is responsible for detecting when data in your application changes and updating the view accordingly. This is one of Angular's core features that ensures the UI is always in sync with the application's state.
+
+**How Change Detection Works:**
+
+1. **Zones**:
+   - Angular relies on a library called Zone.js to manage and detect asynchronous operations like HTTP requests, setTimeout, or user interactions. When such an operation occurs, Angular is notified, triggering the change detection process.
+
+2. **Change Detection Cycle**:
+   - During a change detection cycle, Angular checks every component in the component tree to see if the data-bound properties have changed. If a change is detected, Angular re-renders the affected components.
+
+3. **Default Change Detection Strategy**:
+   - Angular's default change detection strategy is called "CheckAlways." It checks every component on every change detection cycle, ensuring that all changes are captured.
+
+4. **OnPush Change Detection Strategy**:
+   - You can optimize performance by using the `OnPush` strategy. With this strategy, Angular only checks a component when its input properties change, or when an event occurs within the component.
+
+   ```typescript
+   @Component({
+     selector: 'app-my-component',
+     changeDetection: ChangeDetectionStrategy.OnPush,
+     template: `...`,
+   })
+   export class MyComponent {}
+   ```
+
+**Optimizing Change Detection**:
+
+- **Use `OnPush` strategy for components that rely heavily on immutable data or have a large number of elements.**
+- **Minimize the number of change detection cycles by avoiding unnecessary bindings or heavy computations in templates.**
+
+---
+
+**94. What is a Singleton Service in Angular, and how do you create one?**
+
+A Singleton Service in Angular is a service that is instantiated only once during the entire lifetime of the application. All components and other services that inject this service receive the same instance.
+
+**Creating a Singleton Service:**
+
+1. **Using `providedIn: 'root'`**:
+
+   The easiest way to create a Singleton Service is to use the `providedIn` metadata in the `@Injectable` decorator with the value `'root'`.
+
+   ```typescript
+   @Injectable({
+     providedIn: 'root',
+   })
+   export class SingletonService {
+     // Service logic here
+   }
+   ```
+
+   By using `providedIn: 'root'`, the service is registered at the root level, making it a singleton across the application.
+
+2. **Providing the Service in a Module**:
+
+   Alternatively, you can provide the service in the `providers` array of the `@NgModule` decorator in the application's root module (typically `AppModule`).
+
+   ```typescript
+   @NgModule({
+     providers: [SingletonService],
+   })
+   export class AppModule {}
+   ```
+
+**Advantages of Singleton Services**:
+
+- **Shared State**: A Singleton Service allows components to share data and state across the application.
+- **Centralized Logic**: Centralize logic that needs to be used across multiple components, reducing code duplication.
+- **Efficiency**: Only one instance of the service is created, reducing memory overhead.
+
+---
+
+**95. What is Angular's `Renderer2`, and when would you use it?**
+
+Angular's `Renderer2` is a service that allows you to manipulate the DOM in a platform-agnostic way. Instead of directly accessing the DOM via `document` or `element`, Angular recommends using `Renderer2` to ensure compatibility with different rendering environments, such as server-side rendering.
+
+**Using `Renderer2`:**
+
+1. **Inject `Renderer2`**:
+
+   Inject `Renderer2` into your component or directive constructor.
+
+   ```typescript
+   import { Renderer2, ElementRef } from '@angular/core';
+
+   constructor(private renderer: Renderer2, private el: ElementRef) {}
+   ```
+
+2. **Manipulate DOM Elements**:
+
+   Use `Renderer2` methods to interact with DOM elements.
+
+   - **Set a Style**:
+
+     ```typescript
+     this.renderer.setStyle(this.el.nativeElement, 'color', 'blue');
+     ```
+
+   - **Add or Remove Classes**:
+
+     ```typescript
+     this.renderer.addClass(this.el.nativeElement, 'active');
+     this.renderer.removeClass(this.el.nativeElement, 'inactive');
+     ```
+
+   - **Set an Attribute**:
+
+     ```typescript
+     this.renderer.setAttribute(this.el.nativeElement, 'role', 'button');
+     ```
+
+   - **Create and Append Elements**:
+
+     ```typescript
+     const newElement = this.renderer.createElement('span');
+     this.renderer.appendChild(this.el.nativeElement, newElement);
+     ```
+
+**When to Use `Renderer2`:**
+
+- **Compatibility**: Use `Renderer2` when you need to ensure that your code works across different platforms (e.g., web browsers, server-side rendering).
+- **Security**: By using `Renderer2`, you avoid direct DOM manipulation, which can be safer and prevent certain types of security vulnerabilities.
+- **Flexibility**: `Renderer2` abstracts away direct DOM access, making your code more testable and easier to maintain.
+
+---
+
+### Angular Interview Questions and Answers (Starting from 96)
+
+---
+
+**96. What are Angular Animations, and how do you implement them?**
+
+Angular Animations provide a way to create rich, interactive animations in your Angular applications. They are based on the Web Animations API and allow for complex, reusable animations triggered by state changes.
+
+**Implementing Angular Animations:**
+
+1. **Import the Animations Module**:
+
+   First, import the `BrowserAnimationsModule` in your `AppModule`.
+
+   ```typescript
+   import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+   @NgModule({
+     imports: [BrowserAnimationsModule],
+   })
+   export class AppModule {}
+   ```
+
+2. **Define an Animation**:
+
+   Use the `trigger`, `state`, `style`, `animate`, and `transition` functions to define your animation in the component.
+
+   ```typescript
+   import { trigger, state, style, animate, transition } from '@angular/animations';
+
+   @Component({
+     selector: 'app-animate',
+     templateUrl: './animate.component.html',
+     animations: [
+       trigger('openClose', [
+         state('open', style({
+           height: '200px',
+           opacity: 1,
+           backgroundColor: 'yellow'
+         })),
+         state('closed', style({
+           height: '100px',
+           opacity: 0.5,
+           backgroundColor: 'green'
+         })),
+         transition('open => closed', [
+           animate('0.5s')
+         ]),
+         transition('closed => open', [
+           animate('0.5s')
+         ]),
+       ]),
+     ],
+   })
+   export class AnimateComponent {
+     isOpen = true;
+
+     toggle() {
+       this.isOpen = !this.isOpen;
+     }
+   }
+   ```
+
+3. **Use the Animation in the Template**:
+
+   Bind the animation trigger to a DOM element in the template.
+
+   ```html
+   <div [@openClose]="isOpen ? 'open' : 'closed'">
+     Click the button to toggle the animation.
+   </div>
+   <button (click)="toggle()">Toggle</button>
+   ```
+
+**Advantages of Angular Animations**:
+
+- **Rich Interactivity**: Easily add animations to enhance the user experience.
+- **Reusable**: Define animations once and reuse them across multiple components.
+- **Declarative**: Define animations declaratively in the component’s metadata, making them easy to understand and maintain.
+
+---
+
+**97. How does Angular handle Dependency Injection, and what is its significance?**
+
+Dependency Injection (DI) in Angular is a design pattern used to implement IoC (Inversion of Control). It allows the Angular framework to inject dependencies (like services) into components, services, or other classes.
+
+**How Angular DI Works:**
+
+1. **Providers**:
+   - A provider is an instruction to the Angular DI system on how to obtain a value for a dependency.
+   - Providers are usually defined in the `@Injectable` decorator, in the `providers` array of a module, or at the component level.
+
+   ```typescript
+   @Injectable({
+     providedIn: 'root',
+   })
+   export class MyService {
+     // Service logic
+   }
+   ```
+
+2. **Injectors**:
+   - Angular uses an injector to keep track of dependency instances and provide them when required.
+   - Each Angular application has a root injector that is responsible for providing dependencies at the root level.
+
+3. **Constructor Injection**:
+   - The most common way to inject dependencies is through the constructor of a class.
+
+   ```typescript
+   import { Component } from '@angular/core';
+   import { MyService } from './my-service';
+
+   @Component({
+     selector: 'app-my-component',
+     templateUrl: './my-component.component.html',
+   })
+   export class MyComponent {
+     constructor(private myService: MyService) {
+       // Now myService is available to use within this component
+     }
+   }
+   ```
+
+**Significance of DI in Angular**:
+
+- **Loose Coupling**: DI promotes loose coupling between components and services, making the code easier to maintain and test.
+- **Scalability**: DI enables you to scale your application by easily managing dependencies and their lifecycles.
+- **Modularity**: By injecting dependencies, different parts of the application can be developed and tested independently.
+
+---
+
+**98. What is an Angular Service Worker, and how does it contribute to building Progressive Web Apps (PWAs)?**
+
+Angular Service Workers are a key feature in building Progressive Web Apps (PWAs). A Service Worker is a script that runs in the background, separate from the web page, and can intercept and handle network requests, manage caching, and enable offline functionality.
+
+**How Angular Service Workers Contribute to PWAs**:
+
+1. **Offline Support**:
+   - Service Workers cache resources (HTML, CSS, JS, etc.) during the initial visit, enabling the app to work offline or in low-network conditions.
+
+2. **Push Notifications**:
+   - Service Workers can listen for push notifications from the server and display them even when the application is not running.
+
+3. **Background Sync**:
+   - Service Workers can synchronize data in the background, ensuring that the app's data is up-to-date when connectivity is restored.
+
+4. **Improved Performance**:
+   - By caching assets and serving them from the cache, Service Workers can significantly improve the performance of the app, leading to faster load times.
+
+**Setting Up Angular Service Workers**:
+
+1. **Install the Service Worker Package**:
+
+   ```bash
+   ng add @angular/pwa --project *project-name*
+   ```
+
+2. **Configure the `ngsw-config.json`**:
+   - The `ngsw-config.json` file is where you configure the caching strategies, assets, and data groups.
+
+3. **Build and Serve the Application**:
+   - Build the application with service worker support and deploy it to a server.
+
+   ```bash
+   ng build --prod
+   ```
+
+**Advantages**:
+
+- **Offline Capabilities**: Ensures the app works even when there is no network connection.
+- **Improved User Experience**: Faster load times and the ability to function offline enhance the user experience.
+- **Engagement**: Push notifications keep users engaged, even when they are not actively using the app.
+
+---
+
+**99. What is Angular Universal, and why would you use it?**
+
+Angular Universal is a technology that allows Angular applications to be rendered on the server-side rather than on the client-side. This server-side rendering (SSR) approach can improve the performance and SEO of Angular applications.
+
+**Why Use Angular Universal?**
+
+1. **Improved Performance**:
+   - SSR can reduce the initial load time of the application, especially on slower networks or less powerful devices, by delivering pre-rendered HTML to the client.
+
+2. **Better SEO**:
+   - Search engines can crawl and index server-rendered HTML more effectively, improving the visibility of your application in search results.
+
+3. **Faster First Contentful Paint (FCP)**:
+   - By rendering content on the server and sending it to the client as HTML, the time it takes for users to see the first meaningful content is reduced.
+
+**Setting Up Angular Universal**:
+
+1. **Install Angular Universal**:
+
+   ```bash
+   ng add @nguniversal/express-engine --clientProject *project-name*
+   ```
+
+2. **Update the App Server**:
+
+   Angular Universal will create a server file (`server.ts`) that handles the SSR process.
+
+3. **Build and Serve**:
+
+   Use the Angular CLI to build the Universal app and serve it using a Node.js server.
+
+   ```bash
+   npm run build:ssr
+   npm run serve:ssr
+   ```
+
+**Use Cases**:
+
+- **Public-Facing Websites**: Websites that require SEO optimization, like blogs or e-commerce sites, benefit significantly from SSR.
+- **Performance-Critical Applications**: Applications that need to load quickly, especially on mobile or in areas with poor network coverage, should consider Angular Universal.
+
+---
+
+**100. What is the `ng-container` directive in Angular, and when should you use it?**
+
+The `ng-container` directive is an Angular element that acts as a container without rendering any additional DOM elements. It is often used to group elements in templates when structural directives need to be applied to multiple elements.
+
+**Using `ng-container`**:
+
+1. **Avoid Unnecessary DOM Elements**:
+
+   Unlike `div`, `span`, or other HTML elements, `ng-container` does not add any extra nodes to the DOM. It’s purely a structural directive that helps with template organization.
+
+   ```html
+   <ng-container *ngIf="isLoggedIn">
+     <p>Welcome back, user!</p>
+     <button>Logout</button>
+   </ng-container>
+   ```
+
+2. **Grouping Multiple Elements**:
+
+   You can group multiple elements under a single structural directive without adding extra HTML tags to the DOM.
+
+   ```html
+   <ng-container *ngFor="let item of items">
+     <div>{{ item.name }}</div>
+     <span>{{ item.price }}</span>
+   </ng-container>
+   ```
+
+**Advantages**:
+
+- **Cleaner DOM**: Keeps the DOM structure clean and minimal by avoiding unnecessary wrapper elements.
+- **Flexible Template Structure**: Provides more flexibility in applying structural directives across multiple elements without altering the DOM.
+
+---
+
+### Angular Interview Questions and Answers (Starting from 101)
+
+---
+
+**101. What are Angular Template Variables, and how do they work?**
+
+Angular Template Variables are references to DOM elements or Angular components within a template. They allow you to access properties and methods of elements or components directly in the template.
+
+**Using Template Variables:**
+
+1. **Basic Usage**:
+
+   Template variables are defined using the `#` symbol followed by the variable name.
+
+   ```html
+   <input #myInput type="text">
+   <button (click)="logValue(myInput.value)">Log Input Value</button>
+   ```
+
+   In this example, `myInput` is a template variable that references the `input` element. The `logValue()` method can then access the value of the input directly.
+
+2. **Accessing Components**:
+
+   Template variables can also reference Angular components.
+
+   ```html
+   <app-child-component #childComp></app-child-component>
+   <button (click)="childComp.someMethod()">Call Child Method</button>
+   ```
+
+   Here, `childComp` is a template variable that gives you access to the `app-child-component`, allowing you to call methods or access properties of the child component.
+
+**Advantages**:
+
+- **Simplified Access**: Template variables provide a straightforward way to access elements and components without needing to use Angular's `ViewChild` decorator.
+- **Improved Template Interactivity**: They allow for more dynamic and interactive templates by enabling direct access to DOM elements and component properties.
+
+---
+
+**102. How do you handle form validation in Angular using Reactive Forms?**
+
+In Angular, form validation can be managed using either Template-Driven Forms or Reactive Forms. Reactive Forms are more powerful and provide a more structured way of managing form controls and their validation.
+
+**Handling Form Validation with Reactive Forms:**
+
+1. **Set Up the Form Group**:
+
+   First, create a `FormGroup` with `FormControl` instances and define the validators.
+
+   ```typescript
+   import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+   this.myForm = new FormGroup({
+     username: new FormControl('', [Validators.required, Validators.minLength(4)]),
+     email: new FormControl('', [Validators.required, Validators.email]),
+     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+   });
+   ```
+
+2. **Access Form Controls in the Template**:
+
+   Bind the form group to the template and display validation messages.
+
+   ```html
+   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+     <label for="username">Username</label>
+     <input id="username" formControlName="username">
+     <div *ngIf="myForm.get('username').invalid && myForm.get('username').touched">
+       Username is required and must be at least 4 characters long.
+     </div>
+
+     <label for="email">Email</label>
+     <input id="email" formControlName="email">
+     <div *ngIf="myForm.get('email').invalid && myForm.get('email').touched">
+       Please enter a valid email.
+     </div>
+
+     <label for="password">Password</label>
+     <input id="password" type="password" formControlName="password">
+     <div *ngIf="myForm.get('password').invalid && myForm.get('password').touched">
+       Password is required and must be at least 8 characters long.
+     </div>
+
+     <button type="submit" [disabled]="myForm.invalid">Submit</button>
+   </form>
+   ```
+
+3. **Form Submission**:
+
+   Handle form submission by accessing the form’s value and checking its validity.
+
+   ```typescript
+   onSubmit() {
+     if (this.myForm.valid) {
+       console.log('Form Submitted', this.myForm.value);
+     } else {
+       console.log('Form is invalid');
+     }
+   }
+   ```
+
+**Advantages of Reactive Forms**:
+
+- **More Control**: Reactive Forms provide better control over form behavior and validation logic.
+- **Easier Testing**: They are easier to test due to their more predictable and explicit structure.
+- **Scalability**: Reactive Forms are well-suited for complex forms that require dynamic validation rules or conditional form fields.
+
+---
+
+**103. What is Angular's `ViewEncapsulation`, and what are the different types available?**
+
+Angular’s `ViewEncapsulation` defines how styles defined in a component affect the DOM and how the component’s styles are isolated from the rest of the application.
+
+**Types of View Encapsulation**:
+
+1. **Emulated (Default)**:
+   - Emulated encapsulation is the default in Angular. It uses attribute selectors to scope styles to a specific component.
+   - Angular adds a unique attribute to each component’s host element and adjusts the CSS selectors accordingly.
+
+   ```typescript
+   @Component({
+     selector: 'app-example',
+     templateUrl: './example.component.html',
+     styleUrls: ['./example.component.css'],
+     encapsulation: ViewEncapsulation.Emulated,
+   })
+   ```
+
+   ```css
+   /* This style applies only to elements within the component */
+   .example-class {
+     color: blue;
+   }
+   ```
+
+2. **None**:
+   - No encapsulation means that styles defined in a component can affect the entire application, as if they were global styles.
+
+   ```typescript
+   @Component({
+     selector: 'app-example',
+     templateUrl: './example.component.html',
+     styleUrls: ['./example.component.css'],
+     encapsulation: ViewEncapsulation.None,
+   })
+   ```
+
+   ```css
+   /* This style can affect any element in the application */
+   .example-class {
+     color: blue;
+   }
+   ```
+
+3. **Shadow DOM**:
+   - Shadow DOM encapsulation uses the browser’s native Shadow DOM API to provide true style encapsulation.
+   - Styles are scoped to the component and do not leak out, and global styles cannot affect the component’s styles.
+
+   ```typescript
+   @Component({
+     selector: 'app-example',
+     templateUrl: './example.component.html',
+     styleUrls: ['./example.component.css'],
+     encapsulation: ViewEncapsulation.ShadowDom,
+   })
+   ```
+
+   ```css
+   /* This style is fully encapsulated within the component */
+   .example-class {
+     color: blue;
+   }
+   ```
+
+**Advantages of View Encapsulation**:
+
+- **Style Isolation**: Prevents styles from leaking into other parts of the application.
+- **Customization**: Allows developers to choose the appropriate level of encapsulation for their needs, balancing style isolation with global styling when needed.
+
+---
+
+**104. What is an Angular Pipe, and how do you create a custom pipe?**
+
+Angular Pipes are a way to transform data in templates. They can be used to format, filter, or manipulate data before displaying it in the UI.
+
+**Creating a Custom Pipe**:
+
+1. **Generate a Pipe**:
+
+   Use Angular CLI to generate a pipe.
+
+   ```bash
+   ng generate pipe customPipe
+   ```
+
+2. **Implement the Pipe Logic**:
+
+   Implement the `transform` method in the generated pipe class. This method takes the input value and any optional parameters and returns the transformed value.
+
+   ```typescript
+   import { Pipe, PipeTransform } from '@angular/core';
+
+   @Pipe({
+     name: 'customPipe'
+   })
+   export class CustomPipe implements PipeTransform {
+     transform(value: string, arg1: string, arg2: string): string {
+       return `${arg1} ${value} ${arg2}`;
+     }
+   }
+   ```
+
+3. **Use the Pipe in a Template**:
+
+   Apply the custom pipe in the template.
+
+   ```html
+   <p>{{ 'Angular' | customPipe:'Hello':'!' }}</p>
+   ```
+
+   Output: `Hello Angular !`
+
+**Advantages of Angular Pipes**:
+
+- **Code Reusability**: Pipes allow you to reuse common transformations throughout your application.
+- **Simplified Templates**: They help keep templates clean and readable by moving transformation logic to pipes.
+- **Customizable**: You can create custom pipes tailored to your specific needs, beyond the built-in ones like `date`, `currency`, `uppercase`, etc.
+
+---
+
+**105. What are Angular Lifecycle Hooks, and why are they important?**
+
+Angular Lifecycle Hooks are special methods that Angular calls at specific moments in the lifecycle of a component or directive. These hooks allow developers to tap into the component lifecycle and perform actions like initializing data, cleaning up resources, or responding to changes in input properties.
+
+**Common Angular Lifecycle Hooks**:
+
+1. **ngOnInit**:
+   - Called once after the component’s data-bound properties have been initialized. Ideal for initializing component state or fetching data.
+
+   ```typescript
+   ngOnInit() {
+     console.log('Component initialized');
+   }
+   ```
+
+2. **ngOnChanges**:
+   - Called whenever an input-bound property changes. It receives a `SimpleChanges` object containing the current and previous values of the changed properties.
+
+   ```typescript
+   ngOnChanges(changes: SimpleChanges) {
+     console.log('Input properties changed', changes);
+   }
+   ```
+
+3. **ngDoCheck**:
+   - Called during every change detection run, giving developers a chance to implement custom change detection logic.
+
+   ```typescript
+   ngDoCheck() {
+     console.log('Custom change detection');
+   }
+   ```
+
+4. **ngOnDestroy**:
+   - Called just before the component is destroyed. It's a good place to clean up resources like subscriptions or event listeners.
+
+   ```typescript
+   ngOnDestroy() {
+     console.log('Component destroyed');
+   }
+   ```
+
+5. **ngAfterViewInit**:
+   - Called after Angular initializes the component's view and child views.
+
+
+### Angular Interview Questions and Answers (Starting from 106)
+
+---
+
+**106. What is Angular's `ContentChild` and `ContentChildren` decorators, and how do they differ from `ViewChild` and `ViewChildren`?**
+
+In Angular, `ContentChild` and `ContentChildren` are decorators used to query and get references to projected content within a component, while `ViewChild` and `ViewChildren` are used to query and get references to elements within the component's own view.
+
+**`ContentChild` and `ContentChildren`**:
+
+- **Content Projection**: These decorators are used to access elements or components that are projected into a component using the `<ng-content>` directive.
+
+- **Usage Example**:
+
+  ```typescript
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <ng-content></ng-content>
+    `,
+  })
+  export class ParentComponent {
+    @ContentChild('projectedContent', { static: false }) contentChild: ElementRef;
+
+    ngAfterContentInit() {
+      console.log(this.contentChild.nativeElement.textContent);
+    }
+  }
+  ```
+
+  ```html
+  <app-parent>
+    <p #projectedContent>Projected Content</p>
+  </app-parent>
+  ```
+
+  In this example, the `#projectedContent` is accessed using the `@ContentChild` decorator in the `ParentComponent`.
+
+- **Difference**:
+
+  - `ContentChild`: Selects a single projected element or component.
+  - `ContentChildren`: Selects multiple projected elements or components.
+
+**`ViewChild` and `ViewChildren`**:
+
+- **Component's Own Template**: These decorators are used to access elements or components that are declared within the component's own template.
+
+- **Usage Example**:
+
+  ```typescript
+  @Component({
+    selector: 'app-parent',
+    template: `
+      <p #viewChildContent>View Child Content</p>
+    `,
+  })
+  export class ParentComponent {
+    @ViewChild('viewChildContent', { static: false }) viewChild: ElementRef;
+
+    ngAfterViewInit() {
+      console.log(this.viewChild.nativeElement.textContent);
+    }
+  }
+  ```
+
+  In this example, the `#viewChildContent` is accessed using the `@ViewChild` decorator.
+
+- **Difference**:
+
+  - `ViewChild`: Selects a single element or component within the component's view.
+  - `ViewChildren`: Selects multiple elements or components within the component's view.
+
+**Summary**:
+- Use `ContentChild` and `ContentChildren` for projected content (content passed into the component via `<ng-content>`).
+- Use `ViewChild` and `ViewChildren` for elements or components within the component's own template.
+
+---
+
+**107. What is Angular's `Renderer2`, and when would you use it?**
+
+Angular's `Renderer2` is a service that allows you to interact with the DOM in a way that is platform-agnostic, meaning it can work across different platforms like server-side rendering, web workers, or native mobile.
+
+**When to Use `Renderer2`**:
+
+1. **Platform Independence**:
+   - Direct DOM manipulation using native methods like `document.createElement` or `element.style` ties your code to a specific platform. `Renderer2` provides an abstraction layer, ensuring your code remains compatible with multiple platforms.
+
+2. **Security**:
+   - Angular's `Renderer2` helps prevent security issues like XSS attacks by safely interacting with the DOM.
+
+**Basic Usage Example**:
+
+```typescript
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `<button (click)="changeColor()">Change Color</button>`,
+})
+export class ExampleComponent {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  changeColor() {
+    const button = this.el.nativeElement.querySelector('button');
+    this.renderer.setStyle(button, 'color', 'blue');
+  }
+}
+```
+
+In this example, the `Renderer2` service is used to change the color of a button element. By using `Renderer2`, this code remains platform-agnostic and secure.
+
+**Commonly Used Methods in `Renderer2`**:
+- `setStyle`: Adds or updates an inline style on an element.
+- `removeStyle`: Removes an inline style from an element.
+- `setAttribute`: Sets an attribute on an element.
+- `removeAttribute`: Removes an attribute from an element.
+- `addClass`: Adds a CSS class to an element.
+- `removeClass`: Removes a CSS class from an element.
+- `appendChild`: Appends a child element to a parent element.
+- `createElement`: Creates a new element.
+
+**Advantages**:
+- **Platform Agnostic**: Works across various environments, ensuring broader compatibility.
+- **Security**: Prevents security vulnerabilities that may arise from direct DOM manipulation.
+
+---
+
+**108. What are Angular Animations, and how do you implement them?**
+
+Angular Animations provide a way to animate the transitions and changes of DOM elements in a structured and declarative manner. They are built on top of the Web Animations API, allowing for complex animation sequences.
+
+**Basic Steps to Implement Angular Animations**:
+
+1. **Import the Necessary Modules**:
+
+   First, import the `BrowserAnimationsModule` in your main module.
+
+   ```typescript
+   import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+   @NgModule({
+     imports: [BrowserAnimationsModule],
+     // other configurations
+   })
+   export class AppModule {}
+   ```
+
+2. **Define the Animations**:
+
+   In the component, import Angular's animation functions and define your animation.
+
+   ```typescript
+   import { trigger, state, style, transition, animate } from '@angular/animations';
+
+   @Component({
+     selector: 'app-example',
+     templateUrl: './example.component.html',
+     styleUrls: ['./example.component.css'],
+     animations: [
+       trigger('fadeInOut', [
+         state('void', style({ opacity: 0 })),
+         transition('void <=> *', [
+           animate(3000)
+         ]),
+       ]),
+     ],
+   })
+   export class ExampleComponent {}
+   ```
+
+3. **Apply the Animation to the Template**:
+
+   Use the defined animation in your template by binding it to an element.
+
+   ```html
+   <div *ngIf="isVisible" [@fadeInOut]>
+     This element will fade in and out
+   </div>
+   <button (click)="isVisible = !isVisible">Toggle Visibility</button>
+   ```
+
+   In this example, the element will fade in when it appears and fade out when it disappears.
+
+**Core Concepts**:
+
+- **Triggers**: A named set of states and transitions. Triggers are defined in the component’s metadata.
+- **States**: Define different styles for different conditions.
+- **Transitions**: Define how to switch from one state to another.
+- **Animate**: Defines the timing and duration of the transition between states.
+
+**Example of a Complex Animation**:
+
+```typescript
+trigger('openClose', [
+  state('open', style({
+    height: '200px',
+    opacity: 1,
+    backgroundColor: 'yellow'
+  })),
+  state('closed', style({
+    height: '100px',
+    opacity: 0.5,
+    backgroundColor: 'green'
+  })),
+  transition('open => closed', [
+    animate('1s')
+  ]),
+  transition('closed => open', [
+    animate('0.5s')
+  ]),
+])
+```
+
+**Advantages of Angular Animations**:
+
+- **Declarative Syntax**: Angular provides a clear and structured way to define animations, making your code easier to read and maintain.
+- **Integration**: Animations are integrated directly into the Angular component model, allowing you to animate elements and respond to their lifecycle.
+- **Advanced Capabilities**: Supports complex animation sequences, including keyframes, parallel animations, and more.
+
+---
+
+**109. What is the Angular `HttpInterceptor`, and how do you use it?**
+
+Angular `HttpInterceptor` is a powerful feature that allows you to intercept and modify HTTP requests and responses. This is especially useful for adding authentication tokens, handling errors globally, logging, or modifying headers.
+
+**How to Implement an `HttpInterceptor`**:
+
+1. **Create an Interceptor Service**:
+
+   Implement the `HttpInterceptor` interface in a service.
+
+   ```typescript
+   import { Injectable } from '@angular/core';
+   import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+   import { Observable } from 'rxjs';
+
+   @Injectable()
+   export class AuthInterceptor implements HttpInterceptor {
+     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+       const authToken = 'YourAuthTokenHere';
+       const clonedRequest = req.clone({
+         headers: req.headers.set('Authorization', `Bearer ${authToken}`)
+       });
+
+       return next.handle(clonedRequest);
+     }
+   }
+   ```
+
+2. **Provide the Interceptor**:
+
+   Register the interceptor in the `providers` array of your module.
+
+   ```typescript
+   import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+   @NgModule({
+     providers: [
+       { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+     ],
+   })
+   export class AppModule {}
+   ```
+
+   Setting `multi: true` allows you to use multiple interceptors in your application.
+
+**Use Cases for `HttpInterceptor`**:
+
+1. **Adding Authentication Tokens**:
+   - Interceptors are often used to automatically attach authentication tokens to every outgoing HTTP request.
+
+2. **Global Error Handling**:
+   - You can use interceptors to handle HTTP errors globally.
+
+
+### Angular Interview Questions and Answers (Starting from 110)
+
+---
+
+**110. What is Angular's `RendererFactory2`, and how does it relate to `Renderer2`?**
+
+`RendererFactory2` is a service in Angular that is used to create instances of `Renderer2`. It provides an abstraction for DOM manipulation, allowing you to create custom renderers or use Angular's default DOM renderer (`Renderer2`).
+
+**Relationship to `Renderer2`**:
+- `RendererFactory2` is used to obtain an instance of `Renderer2`.
+- While `Renderer2` provides methods to manipulate the DOM (e.g., adding/removing elements, classes, styles), `RendererFactory2` is responsible for creating these instances, especially useful when you need different renderers for different platforms or scenarios.
+
+**Basic Usage Example**:
+
+```typescript
+import { RendererFactory2, Renderer2 } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `<p>Hello World</p>`,
+})
+export class ExampleComponent {
+  private renderer: Renderer2;
+
+  constructor(private rendererFactory: RendererFactory2) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
+
+  changeTextColor() {
+    const paragraph = document.querySelector('p');
+    this.renderer.setStyle(paragraph, 'color', 'blue');
+  }
+}
+```
+
+In this example, `RendererFactory2` creates an instance of `Renderer2`, which is then used to change the text color of a paragraph element.
+
+**Use Cases**:
+- **Custom Renderers**: When building cross-platform applications (e.g., web and native mobile), you may need different renderers for different platforms.
+- **Testing**: In unit tests, `RendererFactory2` allows you to mock or stub out rendering logic, making tests more predictable.
+
+---
+
+**111. What is Angular's `TestBed`, and how do you use it in unit testing?**
+
+`TestBed` is the primary API in Angular for writing unit tests for Angular components, services, and other elements. It allows you to create a testing environment where you can configure modules, inject dependencies, and create components in isolation from the rest of the application.
+
+**How to Use `TestBed`**:
+
+1. **Configure the Testing Module**:
+   - `TestBed.configureTestingModule()` is used to set up the testing module by declaring components, importing modules, and providing services.
+
+   ```typescript
+   beforeEach(() => {
+     TestBed.configureTestingModule({
+       declarations: [MyComponent],
+       imports: [FormsModule],
+       providers: [MyService],
+     }).compileComponents();
+   });
+   ```
+
+2. **Create a Component**:
+   - You can create an instance of a component by using `TestBed.createComponent()`.
+
+   ```typescript
+   it('should create the component', () => {
+     const fixture = TestBed.createComponent(MyComponent);
+     const component = fixture.componentInstance;
+     expect(component).toBeTruthy();
+   });
+   ```
+
+3. **Inject Services**:
+   - `TestBed.inject()` is used to retrieve instances of services for testing.
+
+   ```typescript
+   it('should use MyService', () => {
+     const service = TestBed.inject(MyService);
+     expect(service).toBeTruthy();
+   });
+   ```
+
+**Example of a Simple Test**:
+
+```typescript
+import { TestBed } from '@angular/core/testing';
+import { MyComponent } from './my-component.component';
+import { MyService } from './my-service.service';
+
+describe('MyComponent', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [MyComponent],
+      providers: [MyService],
+    }).compileComponents();
+  });
+
+  it('should create the component', () => {
+    const fixture = TestBed.createComponent(MyComponent);
+    const component = fixture.componentInstance;
+    expect(component).toBeTruthy();
+  });
+
+  it('should have the correct title', () => {
+    const fixture = TestBed.createComponent(MyComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain('MyComponent Title');
+  });
+});
+```
+
+**Advantages**:
+- **Isolation**: `TestBed` allows you to isolate and test components and services in a controlled environment.
+- **Dependency Injection**: You can easily inject and mock dependencies, making it easier to test components and services in isolation.
+- **Comprehensive**: `TestBed` can handle components, services, directives, pipes, and more, providing a full suite of testing capabilities.
+
+---
+
+**112. What is Angular's `ng-template`, and how is it different from `ng-container`?**
+
+`ng-template` is an Angular directive that allows you to define a template that isn't rendered by default. It's often used for structural directives like `ngIf`, `ngFor`, and `ngSwitch`, or when you need to create reusable templates.
+
+**Key Characteristics of `ng-template`**:
+- **Not Rendered by Default**: The content inside `ng-template` is not rendered until it is explicitly instantiated.
+- **Usage with Structural Directives**: `ng-template` is commonly used with structural directives like `*ngIf` and `*ngFor` to define the template for those directives.
+
+**Basic Usage Example**:
+
+```html
+<ng-template #myTemplate>
+  <p>This is a template!</p>
+</ng-template>
+
+<button (click)="showTemplate = !showTemplate">Toggle Template</button>
+<div *ngIf="showTemplate; else myTemplate">
+  <p>Template is shown!</p>
+</div>
+```
+
+In this example, the content inside the `ng-template` is only rendered when the `else` condition of `*ngIf` is met.
+
+**Difference Between `ng-template` and `ng-container`**:
+- **`ng-template`**: Defines a template that is not rendered by default. It can be instantiated multiple times by directives like `ngFor`.
+- **`ng-container`**: Acts as a grouping element that does not add any additional DOM element. It's used to apply structural directives without adding an extra wrapper element.
+
+**Usage Example of `ng-container`**:
+
+```html
+<ng-container *ngIf="condition">
+  <p>This content is conditionally rendered without an extra wrapper.</p>
+</ng-container>
+```
+
+**Summary**:
+- Use `ng-template` to define templates that can be rendered conditionally or reused in different parts of your application.
+- Use `ng-container` to apply structural directives without adding extra elements to the DOM.
+
+---
+
+**113. What is Angular's `@HostListener` decorator, and how do you use it?**
+
+The `@HostListener` decorator in Angular is used to listen to events on the host element of a directive or component. It allows you to handle events in a clean and declarative manner, without the need to manually add event listeners.
+
+**Basic Usage Example**:
+
+```typescript
+import { Directive, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appClickListener]',
+})
+export class ClickListenerDirective {
+  @HostListener('click', ['$event'])
+  handleClick(event: Event) {
+    console.log('Element clicked:', event);
+  }
+}
+```
+
+In this example, the `@HostListener` decorator listens for the `click` event on the host element (the element to which the directive is applied). When the element is clicked, the `handleClick` method is called.
+
+**Advantages**:
+- **Declarative**: `@HostListener` provides a clean, declarative way to handle events directly within your directives or components.
+- **No Manual Event Binding**: Eliminates the need to manually add or remove event listeners, reducing potential memory leaks.
+- **Event Argument**: You can pass the event object or other event-specific arguments to the handler method by specifying them in the decorator.
+
+**Advanced Example**:
+
+```typescript
+import { Component, HostListener } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `<p>Resize the window and check the console.</p>`,
+})
+export class ExampleComponent {
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    console.log('Window resized:', event);
+  }
+}
+```
+
+In this example, the `@HostListener` decorator is used to listen to the `resize` event on the `window` object, allowing you to react to window resizing.
+
+**Common Use Cases**:
+- Handling user interactions such as clicks, hovers, or key presses.
+- Responding to window events like `resize` or `scroll`.
+- Managing custom events on the host element.
+
+---
+
+**114. What is Angular's `@Optional` decorator, and how is it used in dependency injection?**
+
+The `@Optional` decorator in Angular is used in dependency injection to specify that a dependency is optional. If the dependency is not provided, Angular will inject `null` instead of throwing an error.
+
+**Basic Usage Example**:
+
+```typescript
+import { Component, Optional } from '@angular/core';
+import { MyService } from './my-service.service';
+
+@Component({
+  selector: 'app-example',
+  template: `<p>Check the console for service status.</p>`,
+})
+export class ExampleComponent {
+  constructor(@Optional() private myService: MyService) {
+    if (myService) {
+      console.log('MyService is available.');
+    } else {
+      console.log('MyService is not provided.');
+    }
+  }
+}
+```
+
+In this example, `MyService` is marked as optional using the `@Optional` decorator. If `MyService` is not provided in the module, the component will log that the service is not available instead of throwing an error.
+
+
