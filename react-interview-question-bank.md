@@ -564,7 +564,7 @@ Here are the answers to the React interview questions:
 - **Answer:** State management in React involves managing the state (data) that drives the UI. As an application grows, managing state across multiple components can become complex. A state management library (like Redux or MobX) helps by providing a centralized store for all the state, making it easier to manage, debug, and scale the application.
 
 #### <a id="q60"></a>60. **Why use React over Angular? What are the advantages and disadvantages of these JavaScript frameworks?**
-- **Answer:**
+  - **Answer:**
       - **Advantages of React:**
         - **Flexibility:** React is a library, not a full framework, allowing more flexibility in how it is used.
         - **Component-Based Architecture:** Promotes reusable components, making it easier to maintain and scale applications.
