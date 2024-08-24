@@ -1281,3 +1281,589 @@ spans[2].style.backgroundColor = 'yellow';
 - `.style.backgroundColor = 'yellow'` changes the background color of the selected `<span>` to yellow.
 
 You can run this script in the browser after the HTML has loaded, and the background of the third `<span>` will change to the specified color.
+
+React Hooks are functions that allow you to use React state and lifecycle features within functional components. Introduced in React 16.8, Hooks enable developers to use state and other React features without writing class components.
+
+### Key React Hooks and Their Differences
+
+1. **`useState`**:
+   - **Purpose**: Manages state in a functional component.
+   - **How It Works**: `useState` returns an array with two elements: the current state and a function to update it. When you call the update function, React re-renders the component with the new state.
+   - **Usage Example**:
+     ```javascript
+     const [count, setCount] = useState(0);
+     
+     // Update state
+     setCount(count + 1);
+     ```
+   - **Key Points**:
+     - State persists between renders.
+     - Trigger re-renders when the state changes.
+
+2. **`useRef`**:
+   - **Purpose**: Access or store a mutable reference that persists between renders without triggering re-renders.
+   - **How It Works**: `useRef` returns a mutable object with a `.current` property. You can modify `.current` directly, and changes won’t cause re-renders.
+   - **Usage Example**:
+     ```javascript
+     const inputRef = useRef(null);
+
+     // Access DOM element
+     inputRef.current.focus();
+     ```
+   - **Key Points**:
+     - Commonly used to access DOM elements or store persistent values.
+     - Does not trigger re-renders when updated.
+
+3. **`useContext`**:
+   - **Purpose**: Provides a way to pass data through the component tree without manually passing props down at every level.
+   - **How It Works**: `useContext` accepts a context object (created by `React.createContext`) and returns the current context value for the nearest matching Provider above the component in the tree.
+   - **Usage Example**:
+     ```javascript
+     const ThemeContext = React.createContext('light');
+
+     function MyComponent() {
+         const theme = useContext(ThemeContext);
+         return <div className={theme}>Hello, World!</div>;
+     }
+     ```
+   - **Key Points**:
+     - Simplifies the sharing of global data across the component tree.
+     - Useful for themes, authentication status, language settings, etc.
+
+4. **`useEffect`**:
+   - **Purpose**: Handles side effects in functional components, such as data fetching, subscriptions, or manually changing the DOM.
+   - **How It Works**: `useEffect` takes a function (effect) that is executed after every render (by default) or when specified dependencies change. You can also return a cleanup function to run before the effect re-runs or when the component unmounts.
+   - **Usage Example**:
+     ```javascript
+     useEffect(() => {
+         document.title = `Count: ${count}`;
+
+         return () => {
+             console.log('Cleanup when component unmounts');
+         };
+     }, [count]); // Effect runs only when 'count' changes
+     ```
+   - **Key Points**:
+     - Manages side effects in a declarative way.
+     - Runs after render and can depend on specific state or props.
+
+### Summary of Differences:
+- **`useState`**: Manages state and triggers re-renders when state changes.
+- **`useRef`**: Provides a mutable reference that persists across renders without triggering re-renders.
+- **`useContext`**: Allows you to consume and subscribe to context values, making it easier to share state across components.
+- **`useEffect`**: Manages side effects, such as fetching data or directly manipulating the DOM, with options for cleanup and dependency tracking.
+
+These hooks are foundational for managing state, side effects, and context in functional React components, enabling powerful and efficient component behavior.
+
+
+### 1. **Difference Between `useMemo` and `useCallback`**
+
+- **`useMemo`**:
+  - **Purpose**: Memoizes the result of a computation (a value) so that it only re-computes if its dependencies change.
+  - **Usage**: Use `useMemo` when you want to optimize expensive calculations by memoizing the result.
+  - **Example**:
+    ```javascript
+    const expensiveCalculation = useMemo(() => {
+        return computeExpensiveValue(a, b);
+    }, [a, b]); // Only recalculates if 'a' or 'b' change
+    ```
+
+- **`useCallback`**:
+  - **Purpose**: Memoizes a function reference, so that the function is not recreated on every render unless its dependencies change.
+  - **Usage**: Use `useCallback` when you want to avoid passing a new function reference to child components on every render, which could cause unnecessary re-renders.
+  - **Example**:
+    ```javascript
+    const memoizedCallback = useCallback(() => {
+        doSomething(a, b);
+    }, [a, b]); // Only re-creates the function if 'a' or 'b' change
+    ```
+
+### 2. **Code Example for `React.useMemo()`**
+
+```javascript
+import React, { useMemo } from 'react';
+
+function ExpensiveComponent({ a, b }) {
+    const expensiveResult = useMemo(() => {
+        return a + b; // Replace with your expensive calculation
+    }, [a, b]);
+
+    return <div>{expensiveResult}</div>;
+}
+```
+
+### 3. **How to Stop Re-rendering the Child Component?**
+
+- **Using `React.memo`**: Wrap the child component with `React.memo` to prevent unnecessary re-renders when the props haven't changed.
+  
+  ```javascript
+  const ChildComponent = React.memo(({ value }) => {
+      console.log('Child rendered');
+      return <div>{value}</div>;
+  });
+
+  function ParentComponent() {
+      const [count, setCount] = useState(0);
+      return <ChildComponent value={count} />;
+  }
+  ```
+
+- **Using `useCallback`**: Use `useCallback` to prevent passing a new function reference to the child component, which could cause re-renders.
+
+### 4. **What is Props Drilling?**
+
+Props drilling refers to the process of passing data from a parent component to a deeply nested child component through multiple layers of intermediate components. This can make the code harder to maintain and lead to unnecessary re-renders.
+
+### 5. **React Context**
+
+React Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+- **Creating a Context**:
+  ```javascript
+  const ThemeContext = React.createContext('light');
+
+  function App() {
+      return (
+          <ThemeContext.Provider value="dark">
+              <Toolbar />
+          </ThemeContext.Provider>
+      );
+  }
+
+  function Toolbar() {
+      return (
+          <div>
+              <ThemedButton />
+          </div>
+      );
+  }
+
+  function ThemedButton() {
+      const theme = useContext(ThemeContext);
+      return <button style={{ background: theme }}>Click me</button>;
+  }
+  ```
+
+### 6. **How to Forward the Reference from Child Component to Parent Component in Functional Component?**
+
+- **Using `React.forwardRef`**:
+  ```javascript
+  const ChildComponent = React.forwardRef((props, ref) => (
+      <input ref={ref} />
+  ));
+
+  function ParentComponent() {
+      const inputRef = useRef(null);
+
+      const focusInput = () => {
+          inputRef.current.focus();
+      };
+
+      return (
+          <div>
+              <ChildComponent ref={inputRef} />
+              <button onClick={focusInput}>Focus Input</button>
+          </div>
+      );
+  }
+  ```
+
+### 7. **Difference Between `useState` and `useMemo`**
+
+- **`useState`**: Used to manage state within a component. Changing the state triggers a re-render.
+- **`useMemo`**: Used to memoize a value to avoid expensive calculations on every render. Does not cause a re-render.
+
+### 8. **How Many Re-renders Happen with `useRef`?**
+
+- **With `useRef`**: Changing the `.current` property of a `useRef` object does not trigger a re-render. No re-renders happen when you update the value of `useRef`.
+
+### 9. **Call the Child Component Function from Parent Component Without Using Props and `useEffect`**
+
+- **Using `useRef` and `useImperativeHandle`**:
+  ```javascript
+  import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+
+  const ChildComponent = forwardRef((props, ref) => {
+      useImperativeHandle(ref, () => ({
+          childFunction() {
+              console.log('Child function called');
+          }
+      }));
+      return <div>Child Component</div>;
+  });
+
+  function ParentComponent() {
+      const childRef = useRef(null);
+
+      const callChildFunction = () => {
+          childRef.current.childFunction();
+      };
+
+      return (
+          <div>
+              <ChildComponent ref={childRef} />
+              <button onClick={callChildFunction}>Call Child Function</button>
+          </div>
+      );
+  }
+  ```
+
+In this example, the parent can call the child's function without passing it through props or using `useEffect`.
+
+
+### 1. **What is TypeScript?**
+
+TypeScript is a statically typed superset of JavaScript that adds optional types to the language. Developed by Microsoft, TypeScript compiles to plain JavaScript and is designed to help catch errors early in the development process, making code more predictable and easier to debug. 
+
+- **Key Features**:
+  - **Static Typing**: You can define types for variables, function parameters, and return values, allowing for type-checking at compile time.
+  - **Interfaces**: Allows you to define contracts within your code, making sure that certain structures are followed.
+  - **Classes**: Provides a way to define object-oriented constructs, such as classes and inheritance.
+  - **Type Inference**: TypeScript can automatically infer types based on code, reducing the need for explicit type annotations.
+  - **Tooling**: Better tooling and autocompletion in IDEs due to type information.
+
+### 2. **Difference Between Interface and Class**
+
+- **Interface**:
+  - **Purpose**: Defines the shape or structure of an object. It’s a contract that defines what properties and methods an object should have, but does not provide implementation.
+  - **Usage**: Used to define types and ensure that objects conform to a specific structure.
+  - **Example**:
+    ```typescript
+    interface Person {
+        name: string;
+        age: number;
+        greet(): void;
+    }
+    
+    const john: Person = {
+        name: "John",
+        age: 30,
+        greet() {
+            console.log("Hello, my name is John");
+        }
+    };
+    ```
+  - **Key Points**:
+    - Interfaces only define the structure and do not include any implementation details.
+    - Interfaces support multiple inheritance (a class can implement multiple interfaces).
+
+- **Class**:
+  - **Purpose**: Defines a blueprint for creating objects. A class encapsulates data and methods that operate on that data.
+  - **Usage**: Used to create objects and encapsulate related data and behavior.
+  - **Example**:
+    ```typescript
+    class Person {
+        name: string;
+        age: number;
+        
+        constructor(name: string, age: number) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        greet() {
+            console.log(`Hello, my name is ${this.name}`);
+        }
+    }
+    
+    const john = new Person("John", 30);
+    john.greet();
+    ```
+  - **Key Points**:
+    - Classes provide implementation details, including constructors, methods, and properties.
+    - Classes can have constructors, and they support inheritance (a class can extend another class).
+
+### 3. **Function Currying, `call`, `apply`, and `bind`**
+
+- **Function Currying**:
+  - **Purpose**: Currying is a technique of transforming a function with multiple arguments into a sequence of functions, each taking a single argument.
+  - **Example**:
+    ```javascript
+    function add(a) {
+        return function(b) {
+            return a + b;
+        };
+    }
+    
+    const addFive = add(5);
+    console.log(addFive(10)); // Outputs 15
+    ```
+  - **Key Points**:
+    - Allows partial application of functions.
+    - Helps in creating reusable functions with preset arguments.
+
+- **`call`**:
+  - **Purpose**: Invokes a function with a specific `this` context and individual arguments.
+  - **Usage**: Useful for borrowing methods from other objects.
+  - **Example**:
+    ```javascript
+    function greet() {
+        console.log(`Hello, ${this.name}`);
+    }
+    
+    const person = { name: "Alice" };
+    
+    greet.call(person); // Outputs: Hello, Alice
+    ```
+  - **Key Points**:
+    - `call` allows you to pass individual arguments to the function.
+
+- **`apply`**:
+  - **Purpose**: Similar to `call`, but takes arguments as an array.
+  - **Usage**: Useful when arguments are in an array or array-like structure.
+  - **Example**:
+    ```javascript
+    function greet(greeting, punctuation) {
+        console.log(`${greeting}, ${this.name}${punctuation}`);
+    }
+    
+    const person = { name: "Bob" };
+    
+    greet.apply(person, ["Hi", "!"]); // Outputs: Hi, Bob!
+    ```
+  - **Key Points**:
+    - `apply` is ideal for functions that accept an arbitrary number of arguments.
+
+- **`bind`**:
+  - **Purpose**: Creates a new function with a specific `this` context and optional preset arguments.
+  - **Usage**: Useful for setting `this` context in callback functions or event handlers.
+  - **Example**:
+    ```javascript
+    const person = {
+        name: "Charlie",
+        greet() {
+            console.log(`Hello, ${this.name}`);
+        }
+    };
+    
+    const greetPerson = person.greet.bind(person);
+    greetPerson(); // Outputs: Hello, Charlie
+    ```
+  - **Key Points**:
+    - `bind` returns a new function, allowing for partial application or pre-setting `this`.
+
+These concepts are foundational for mastering JavaScript and TypeScript, particularly in scenarios involving object-oriented programming, functional programming, and asynchronous code.
+
+### 1. **Destructuring, Spread, and Rest Operator**
+
+- **Destructuring**:
+  - **Purpose**: Allows you to extract values from arrays or properties from objects into distinct variables.
+  - **Usage**:
+    - **Array Destructuring**:
+      ```javascript
+      const [a, b] = [1, 2];
+      console.log(a); // 1
+      console.log(b); // 2
+      ```
+    - **Object Destructuring**:
+      ```javascript
+      const { name, age } = { name: "John", age: 30 };
+      console.log(name); // John
+      console.log(age); // 30
+      ```
+  - **Key Points**:
+    - Simplifies extracting data from arrays and objects.
+    - Can assign default values.
+
+- **Spread Operator** (`...`):
+  - **Purpose**: Expands an array or object into its individual elements or properties.
+  - **Usage**:
+    - **Array Spread**:
+      ```javascript
+      const arr1 = [1, 2];
+      const arr2 = [...arr1, 3, 4];
+      console.log(arr2); // [1, 2, 3, 4]
+      ```
+    - **Object Spread**:
+      ```javascript
+      const obj1 = { a: 1, b: 2 };
+      const obj2 = { ...obj1, c: 3 };
+      console.log(obj2); // { a: 1, b: 2, c: 3 }
+      ```
+  - **Key Points**:
+    - Used to clone arrays or objects.
+    - Combines arrays or objects in a more concise manner.
+
+- **Rest Operator** (`...`):
+  - **Purpose**: Collects all remaining elements or properties into an array or object.
+  - **Usage**:
+    - **Function Parameters**:
+      ```javascript
+      function sum(...numbers) {
+          return numbers.reduce((acc, num) => acc + num, 0);
+      }
+      console.log(sum(1, 2, 3)); // 6
+      ```
+    - **Object Rest**:
+      ```javascript
+      const { a, ...rest } = { a: 1, b: 2, c: 3 };
+      console.log(rest); // { b: 2, c: 3 }
+      ```
+  - **Key Points**:
+    - Captures excess elements or properties.
+    - Useful in function arguments and object manipulation.
+
+### 2. **Map vs Filter vs Find**
+
+- **`map`**:
+  - **Purpose**: Creates a new array by applying a function to each element of an existing array.
+  - **Usage**:
+    ```javascript
+    const numbers = [1, 2, 3];
+    const doubled = numbers.map(num => num * 2);
+    console.log(doubled); // [2, 4, 6]
+    ```
+  - **Key Points**:
+    - Returns a new array of the same length.
+    - Used when you need to transform each element.
+
+- **`filter`**:
+  - **Purpose**: Creates a new array containing only the elements that pass a certain condition.
+  - **Usage**:
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    const even = numbers.filter(num => num % 2 === 0);
+    console.log(even); // [2, 4]
+    ```
+  - **Key Points**:
+    - Returns a new array, potentially of different length.
+    - Used when you need to filter out elements based on a condition.
+
+- **`find`**:
+  - **Purpose**: Returns the first element that satisfies a certain condition.
+  - **Usage**:
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    const firstEven = numbers.find(num => num % 2 === 0);
+    console.log(firstEven); // 2
+    ```
+  - **Key Points**:
+    - Returns a single value, not an array.
+    - Stops execution once the first match is found.
+
+### 3. **Event Loop and REPL**
+
+- **Event Loop**:
+  - **Purpose**: Handles asynchronous operations in JavaScript, allowing non-blocking I/O operations.
+  - **How It Works**: JavaScript runs in a single thread, and the event loop is responsible for executing the code, collecting and processing events, and executing queued sub-tasks.
+  - **Key Points**:
+    - Ensures asynchronous operations like `setTimeout`, Promises, and I/O callbacks don’t block the main thread.
+
+- **REPL** (Read-Eval-Print Loop):
+  - **Purpose**: An interactive shell that reads the user’s input, evaluates it, and prints the result.
+  - **Usage**: Commonly used for testing and debugging in environments like Node.js.
+  - **Key Points**:
+    - Useful for quickly trying out JavaScript code.
+
+### 4. **ES6 Features**
+
+- **Let and Const**:
+  - **`let`**: Allows you to declare block-scoped variables. These variables can be reassigned.
+  - **`const`**: Declares block-scoped variables that cannot be reassigned. However, objects declared with `const` can still have their properties mutated.
+  - **Example**:
+    ```javascript
+    const person = { name: "John" };
+    person.name = "Doe"; // Allowed
+    person = {}; // Error: Assignment to constant variable
+    ```
+
+- **Other ES6 Features**:
+  - **Arrow Functions**: Shorter syntax for writing functions.
+  - **Template Literals**: Allows embedding expressions inside string literals using `${}`.
+  - **Destructuring Assignment**: Extracts values from arrays and objects.
+  - **Modules**: `import` and `export` syntax for module management.
+  - **Default Parameters**: Allows setting default values for function parameters.
+
+### 5. **Map vs forEach & Efficiency**
+
+- **`map`**:
+  - **Purpose**: Transforms elements and returns a new array.
+  - **Returns**: A new array with transformed elements.
+  - **Efficiency**: More efficient when you need to create and use a transformed array.
+  
+- **`forEach`**:
+  - **Purpose**: Executes a function on each element but does not return anything.
+  - **Returns**: `undefined`.
+  - **Efficiency**: More efficient when you only need to perform operations without creating a new array.
+  
+- **Which is Efficient?**: 
+  - Use `forEach` if you don’t need a new array. Use `map` if you need to transform and store the result in a new array. `map` might be less efficient in terms of memory since it creates a new array.
+
+These concepts form the core of modern JavaScript development, particularly with ES6 and beyond, where the use of features like destructuring, spread/rest operators, and new loop mechanisms have become common practice.
+
+### What is a Closure?
+
+A **closure** is a function that remembers its outer variables and can access them even when the function is executed outside of its original scope. In simpler terms, a closure allows a function to "remember" the environment in which it was created, even after it has been executed.
+
+#### Example of a Closure:
+
+```javascript
+function outerFunction() {
+    let outerVariable = 'I am from the outer function';
+    
+    function innerFunction() {
+        console.log(outerVariable); // Accessing outerVariable from the inner function
+    }
+    
+    return innerFunction;
+}
+
+const closureFunction = outerFunction();
+closureFunction(); // Output: 'I am from the outer function'
+```
+
+In the example above:
+- `innerFunction` forms a closure, capturing the `outerVariable` from its outer lexical environment.
+- Even after `outerFunction` has finished executing, `innerFunction` still has access to `outerVariable`.
+
+### Explanation of the Code:
+
+```javascript
+for (var i = 1; i <= 2; i++) {
+    setTimeout(function() { alert(i) }, 100);
+}
+```
+
+### What Happens in the Code?
+
+1. **Loop Execution**:
+   - The loop runs with `i` starting from 1 and incrementing up to 2. So, the loop executes twice.
+
+2. **Use of `setTimeout`**:
+   - Each iteration of the loop creates a `setTimeout` that schedules a function to be executed after 100 milliseconds. 
+
+3. **Variable Scope**:
+   - The `var` keyword is used to declare the variable `i`. In JavaScript, `var` is function-scoped or globally scoped, meaning `i` is not block-scoped to the loop but instead exists in the same scope across all iterations of the loop.
+
+4. **Closure Issue**:
+   - The `setTimeout` function forms a closure over the variable `i`. However, because `var` is not block-scoped, all the `setTimeout` callbacks refer to the same `i` variable.
+   - By the time the `setTimeout` callbacks execute (100ms later), the loop has already completed, and `i` has been incremented to 3.
+
+### Output:
+
+- **Result**: The output will be two alerts, both showing `3`.
+- **Reason**: By the time the `setTimeout` functions are executed, the loop has finished, and `i` is `3`. Since the `i` in each callback refers to the same variable, both alerts will display `3`.
+
+### How to Fix It:
+
+To fix this and get the correct `i` values in each `setTimeout`, you can use `let` instead of `var`, or create an IIFE (Immediately Invoked Function Expression) that captures the current value of `i`:
+
+1. **Using `let`**:
+   ```javascript
+   for (let i = 1; i <= 2; i++) {
+       setTimeout(function() { alert(i) }, 100);
+   }
+   ```
+   - **Output**: Alerts will show `1` and `2`.
+   - **Reason**: `let` is block-scoped, so each iteration of the loop has its own `i`.
+
+2. **Using IIFE**:
+   ```javascript
+   for (var i = 1; i <= 2; i++) {
+       (function(i) {
+           setTimeout(function() { alert(i) }, 100);
+       })(i);
+   }
+   ```
+   - **Output**: Alerts will show `1` and `2`.
+   - **Reason**: The IIFE captures the current value of `i` in each iteration, so the `setTimeout` functions use the correct value.
