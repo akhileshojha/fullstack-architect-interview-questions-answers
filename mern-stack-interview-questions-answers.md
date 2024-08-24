@@ -1867,3 +1867,191 @@ To fix this and get the correct `i` values in each `setTimeout`, you can use `le
    ```
    - **Output**: Alerts will show `1` and `2`.
    - **Reason**: The IIFE captures the current value of `i` in each iteration, so the `setTimeout` functions use the correct value.
+Here are the answers to your questions:
+
+### React.js
+
+**1. What is React Fragment? What are the benefits of using it?**
+
+**Answer:**  
+A React Fragment is a special type of component that allows you to group multiple elements without adding extra nodes to the DOM. It is represented by `<React.Fragment>` or simply `<>` and `</>` in JSX.
+
+**Benefits of using React Fragment:**
+- **No Extra DOM Nodes:** Unlike wrapping elements in a `div`, fragments don't create additional DOM nodes, leading to a cleaner and more performant DOM structure.
+- **Key Prop Support:** Fragments support the `key` prop, which is useful when rendering lists of children.
+- **Improved Semantics:** Since fragments don't introduce unnecessary elements, they help maintain the semantic structure of your HTML.
+
+---
+
+**2. What is the difference between `useState` and `useRef`?**
+
+**Answer:**  
+- **`useState`:**  
+  `useState` is a Hook that allows you to add state variables to functional components. It triggers a re-render whenever the state value changes. It is primarily used for managing component data that influences the UI.
+
+- **`useRef`:**  
+  `useRef` is a Hook that provides a way to persist values across renders without causing a re-render when updated. It is typically used to access DOM elements or store mutable variables that don't directly affect the component's output.
+
+**Key Differences:**
+- `useState` re-renders the component when the state changes; `useRef` does not.
+- `useState` is used for reactive data, while `useRef` is used for non-reactive, persistent data (like storing a reference to a DOM element).
+
+---
+
+**3. What is reconciliation in React?**
+
+**Answer:**  
+Reconciliation in React is the process by which React updates the DOM when a component's state or props change. React uses a virtual DOM to perform this process efficiently.
+
+**Key Aspects of Reconciliation:**
+- **Virtual DOM:** React creates a lightweight representation of the actual DOM, called the virtual DOM.
+- **Diffing Algorithm:** React compares the new virtual DOM with the previous version to identify changes.
+- **Efficient Updates:** React updates only the parts of the real DOM that have changed, which makes the process fast and efficient.
+
+Reconciliation allows React to update the UI efficiently by minimizing the number of actual DOM manipulations.
+
+---
+
+### Node.js
+
+**1. What is piping in Node.js?**
+
+**Answer:**  
+Piping in Node.js is a mechanism for connecting the output of one stream directly to the input of another. It is commonly used to read data from one stream and write it directly to another, such as reading data from a file and sending it as an HTTP response.
+
+**Example:**
+```javascript
+const fs = require('fs');
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  const readStream = fs.createReadStream('example.txt');
+  readStream.pipe(res);
+});
+
+server.listen(3000);
+```
+In this example, the content of `example.txt` is piped directly to the HTTP response, allowing efficient streaming of data.
+
+---
+
+**2. What is the difference between `PUT` and `PATCH`?**
+
+**Answer:**  
+- **`PUT`:**  
+  The `PUT` method is used to update a resource completely. It replaces the entire resource with the new content provided in the request.
+
+- **`PATCH`:**  
+  The `PATCH` method is used to apply partial updates to a resource. It modifies only the specified fields of the resource rather than replacing the entire resource.
+
+**Key Differences:**
+- `PUT` is for complete updates, while `PATCH` is for partial updates.
+- Using `PUT` might overwrite unspecified fields with default values, while `PATCH` leaves unspecified fields unchanged.
+
+---
+
+### JavaScript
+
+**1. What are primitive and non-primitive data types?**
+
+**Answer:**  
+- **Primitive Data Types:**  
+  Primitive data types are the most basic types in JavaScript. They are immutable and hold a single value. Examples include:
+  - `String`
+  - `Number`
+  - `Boolean`
+  - `Null`
+  - `Undefined`
+  - `Symbol`
+  - `BigInt`
+
+- **Non-Primitive Data Types:**  
+  Non-primitive data types are objects. They can hold collections of values or more complex entities. Examples include:
+  - `Object`
+  - `Array`
+  - `Function`
+  - `Date`
+  - `RegExp`
+
+**Key Differences:**
+- Primitive types are immutable and stored by value.
+- Non-primitive types are mutable and stored by reference.
+
+---
+
+**2. What is call by value and call by reference?**
+
+**Answer:**  
+- **Call by Value:**  
+  In call by value, a copy of the actual parameter is passed to the function. Changes made to the parameter inside the function do not affect the original value. JavaScript uses call by value for primitive data types.
+
+- **Call by Reference:**  
+  In call by reference, a reference to the actual parameter is passed to the function. Changes made to the parameter inside the function affect the original value. JavaScript uses call by reference for non-primitive data types (objects, arrays).
+
+**Example:**
+```javascript
+function modifyPrimitive(val) {
+  val = 100;
+}
+
+function modifyObject(obj) {
+  obj.key = 'newValue';
+}
+
+let a = 10;
+modifyPrimitive(a); // a remains 10
+
+let b = { key: 'value' };
+modifyObject(b); // b.key becomes 'newValue'
+```
+
+---
+
+**3. Is `Promise.all()` synchronous or not?**
+
+**Answer:**  
+`Promise.all()` is **asynchronous**. It returns a single Promise that resolves when all the promises in the iterable passed to it are resolved. The execution of `Promise.all()` itself is non-blocking and does not run synchronously, but it waits for all the promises to be fulfilled or any one of them to be rejected.
+
+---
+
+### HTML5
+
+**1. What is the HTML5 API? What type of data is stored in local storage, and what is the maximum storage data in local storage?**
+
+**Answer:**  
+- **HTML5 API:**  
+  HTML5 APIs are built-in interfaces in the browser that allow web applications to interact with the underlying system. Some examples include:
+  - **Canvas API:** For drawing graphics.
+  - **Geolocation API:** For obtaining the user's location.
+  - **Web Storage API:** For storing data locally in the browser.
+  - **File API:** For handling files and file uploads.
+
+- **Local Storage:**  
+  Local Storage is part of the Web Storage API, which allows you to store key-value pairs in a web browser with no expiration time. The data stored in Local Storage persists even after the browser is closed.
+
+- **Maximum Storage:**  
+  The maximum storage limit for Local Storage is typically around 5MB per domain, but this can vary depending on the browser.
+
+---
+
+**2. What are the semantic and non-semantic elements in HTML5?**
+
+**Answer:**  
+- **Semantic Elements:**  
+  Semantic elements clearly describe their meaning in a human- and machine-readable way. They help improve accessibility and SEO. Examples include:
+  - `<header>`
+  - `<nav>`
+  - `<section>`
+  - `<article>`
+  - `<footer>`
+  - `<aside>`
+  - `<main>`
+
+- **Non-Semantic Elements:**  
+  Non-semantic elements do not have any specific meaning and are generally used for styling or layout purposes. Examples include:
+  - `<div>`
+  - `<span>`
+
+**Key Differences:**
+- Semantic elements carry meaning about the content within them.
+- Non-semantic elements are used mainly for layout purposes without conveying any particular meaning.
