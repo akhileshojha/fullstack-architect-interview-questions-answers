@@ -4,6 +4,7 @@
 * [MERN Stack](mern-stack-interview-questions-answers.md)
 * [Advanced Javascript](advanced-javascript-interview-questions-answers.md)
 * [Advanced Node.js](advanced-nodejs-interview-questions-answers.md)
+* [Advanced React](advanced-react-interview-questions-answers.md)
 
 ### Frontend Development
 * [HTML5](html5-interview-questions-answers.md)
