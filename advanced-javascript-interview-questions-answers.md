@@ -51,6 +51,491 @@ Here are some advanced JavaScript interview questions that delve into more compl
 Remember to practice these questions and be prepared to provide detailed explanations and code examples to demonstrate your understanding of advanced JavaScript concepts.
 
 
+Here are some advanced JavaScript interview questions:
+
+### 1. **How do closures work in JavaScript, and what are some common use cases?**
+   - Explain the concept of closures, how they allow functions to access variables from their enclosing scope, and provide examples such as memoization, function factories, and module patterns.
+
+### 2. **What are the differences between `var`, `let`, and `const` in JavaScript?**
+   - Discuss scope, hoisting, temporal dead zone (TDZ), reassignment, and immutability aspects of these variable declarations.
+
+### 3. **How does JavaScript's event loop work, and what are microtasks and macrotasks?**
+   - Explore the event loop mechanism, the difference between microtasks (e.g., Promises) and macrotasks (e.g., setTimeout), and how they are handled in the execution stack.
+
+### 4. **What are the potential pitfalls of using `this` in JavaScript, and how can you avoid them?**
+   - Discuss how `this` is determined based on context, common issues in different execution contexts (e.g., arrow functions vs. regular functions), and techniques to avoid problems (e.g., `bind`, `call`, `apply`).
+
+### 5. **How do `call`, `apply`, and `bind` work, and what are their differences?**
+   - Explain how these methods allow explicit control over the value of `this`, the differences in syntax and use cases, and scenarios where each is useful.
+
+### 6. **What is the difference between deep and shallow copies in JavaScript, and how do you create them?**
+   - Explore the concepts of deep and shallow copies, how objects and arrays behave with respect to copying, and techniques for creating copies (e.g., `Object.assign`, spread operator, JSON methods, and libraries like Lodash).
+
+### 7. **How does JavaScript handle asynchronous operations, and what are the different ways to manage them?**
+   - Discuss callback functions, Promises, `async/await`, generators, and how these mechanisms differ in handling asynchronous code.
+
+### 8. **What are JavaScript decorators, and how do they work?**
+   - Explain the concept of decorators, how they are used to modify the behavior of classes or class members, and provide examples of custom decorators.
+
+### 9. **How do prototypes work in JavaScript, and what is the prototype chain?**
+   - Describe the prototype-based inheritance model, how prototypes link objects, and the role of `__proto__` and `Object.create`.
+
+### 10. **What are JavaScript modules, and what are the differences between CommonJS and ES6 modules?**
+    - Explore the differences between module systems, including syntax, static vs. dynamic imports, tree shaking, and how modules are resolved.
+
+### 11. **What is the difference between synchronous and asynchronous iterators in JavaScript?**
+    - Discuss how iterators and generators work, the differences between synchronous and asynchronous iterations, and use cases for `for...of` vs. `for await...of`.
+
+### 12. **How does JavaScript's `Map` differ from an `Object`, and when would you use one over the other?**
+    - Compare `Map` and `Object`, focusing on differences in key types, order of iteration, performance, and use cases.
+
+### 13. **What is the purpose of `Symbol` in JavaScript, and how can it be used?**
+    - Explain what `Symbol` is, its use as unique identifiers, symbol properties, and how it can be used to avoid naming conflicts or to create hidden object properties.
+
+### 14. **What is the difference between `==` and `===` in JavaScript, and why should you prefer one over the other?**
+    - Discuss the concepts of type coercion with `==` and strict equality with `===`, and when each should be used to avoid bugs.
+
+### 15. **How does JavaScript handle memory management, and what is garbage collection?**
+    - Explain how memory is allocated and freed in JavaScript, the role of the garbage collector, and how concepts like reference counting and mark-and-sweep algorithms work.
+
+### 16. **What are higher-order functions, and can you provide some examples in JavaScript?**
+    - Describe higher-order functions, how they can take other functions as arguments or return them, and examples such as `map`, `filter`, and custom function wrappers.
+
+### 17. **What are the benefits and limitations of JavaScript's single-threaded nature?**
+    - Discuss the implications of JavaScript's single-threaded execution model, how it handles concurrency through the event loop, and limitations in terms of performance and multi-core usage.
+
+### 18. **How does JavaScript handle exceptions, and what are best practices for error handling?**
+    - Explore `try...catch` statements, custom error classes, throwing and catching errors, and best practices for maintaining clean and maintainable error-handling code.
+
+### 19. **What are JavaScript generators, and how do they differ from regular functions?**
+    - Explain the concept of generators using `function*`, how they produce iterable sequences, their pause-and-resume capability with `yield`, and use cases for generators.
+
+### 20. **How do you implement memoization in JavaScript, and why is it useful?**
+    - Describe the concept of memoization, how it can improve performance by caching results of expensive function calls, and how to implement it using closures or libraries.
+
+### 21. **What is tail call optimization, and does JavaScript support it?**
+    - Explain the concept of tail call optimization, its impact on recursion and performance, and the status of its support in JavaScript engines.
+
+### 22. **How does JavaScript handle inheritance, and what are the different inheritance patterns you can implement?**
+    - Discuss classical inheritance using ES6 classes, prototypal inheritance using object prototypes, and patterns like mixins or composition over inheritance.
+
+### 23. **What is the role of `new` in JavaScript, and what happens when you call a function with `new`?**
+    - Explain how the `new` operator creates instances of a constructor function, what happens under the hood (creating a new object, setting the prototype, binding `this`), and potential pitfalls.
+
+### 24. **How do you prevent or handle memory leaks in a JavaScript application?**
+    - Discuss common causes of memory leaks, such as closures, event listeners, and DOM references, and techniques for avoiding and detecting them.
+
+### 25. **What is the Temporal API, and how does it improve date and time handling in JavaScript?**
+    - Introduce the Temporal API as a modern replacement for `Date`, its improvements in handling dates, times, time zones, and how it solves issues with the current `Date` API.
+
+### 26. **How do JavaScript decorators work under the hood, and what are some practical use cases?**
+    - Explain the mechanics of decorators, how they can be applied to classes and methods, and provide examples such as logging, validation, or access control.
+
+### 27. **What are Proxy objects in JavaScript, and how do they work?**
+    - Explore the concept of Proxy objects, how they intercept operations on an object, and practical use cases such as validation, property access control, or logging.
+
+### 28. **What is the difference between event capturing and bubbling, and how can you manage event propagation in JavaScript?**
+    - Discuss the event propagation phases (capturing and bubbling), how to use `event.stopPropagation()` and `event.preventDefault()`, and scenarios where managing propagation is essential.
+
+### 29. **What are the benefits and drawbacks of using dynamic typing in JavaScript?**
+    - Analyze the implications of dynamic typing, including flexibility, runtime type errors, the need for type checks, and the trade-offs between dynamic and static typing.
+
+### 30. **How do you handle time zones and daylight saving time in JavaScript?**
+    - Discuss the challenges of handling time zones, daylight saving time, how to manage them with `Date`, and using libraries like `date-fns` or `moment-timezone`.
+
+These advanced questions cover a wide range of JavaScript concepts, including performance optimization, memory management, asynchronous programming, and newer language features. They are designed to challenge a deep understanding of the language and its ecosystem.
+
+Here are more advanced JavaScript interview questions:
+
+### 21. **What is the Temporal Dead Zone (TDZ) in JavaScript, and how does it affect `let` and `const` variables?**
+   - Explain the concept of TDZ, how it relates to the behavior of `let` and `const` before they are initialized, and the differences compared to `var`.
+
+### 22. **How does the JavaScript Event Loop handle asynchronous operations, and what is the difference between microtasks and macrotasks?**
+   - Dive into the mechanics of the Event Loop, how it prioritizes microtasks (e.g., `Promise.then`) over macrotasks (e.g., `setTimeout`), and how this affects the execution order of code.
+
+### 23. **What are WeakMap and WeakSet in JavaScript, and when would you use them over Map and Set?**
+   - Discuss the characteristics of WeakMap and WeakSet, particularly how they hold weak references to objects, and scenarios where they prevent memory leaks in certain use cases.
+
+### 24. **How does JavaScript handle floating-point arithmetic, and what are some common pitfalls?**
+   - Explore the limitations of floating-point arithmetic in JavaScript, including precision issues, and how to handle scenarios like comparing floating-point numbers or performing calculations with them.
+
+### 25. **What is the purpose of the `Symbol` primitive in JavaScript, and how can it be used effectively?**
+   - Explain the `Symbol` type, how it creates unique, immutable identifiers, and practical use cases like defining non-enumerable properties or custom iterations.
+
+### 26. **How does JavaScript's prototype chain work, and how does it differ from classical inheritance?**
+   - Discuss the prototype-based inheritance model in JavaScript, how objects inherit properties and methods from their prototype, and the key differences from classical inheritance models in other languages.
+
+### 27. **What is a closure in JavaScript, and how does it affect the scope of variables?**
+   - Define closures, how they capture and preserve the scope of variables even after a function has returned, and practical examples of closures in use, such as creating private variables.
+
+### 28. **How does the `this` keyword behave in JavaScript, and how can you control its context?**
+   - Explore the various rules that govern the value of `this` in different contexts (e.g., global, object methods, constructors, event handlers), and how methods like `call`, `apply`, and `bind` can be used to control it.
+
+### 29. **What is the difference between shallow copy and deep copy in JavaScript, and how can you implement them?**
+   - Explain the concepts of shallow and deep copies, how they affect nested objects, and methods to achieve deep copies (e.g., `JSON.parse(JSON.stringify())`, `structuredClone`, custom recursive functions).
+
+### 30. **How does JavaScript handle concurrency, and what are the implications of single-threaded execution?**
+   - Discuss how JavaScript manages concurrency with its single-threaded event loop, non-blocking I/O, and asynchronous programming paradigms like callbacks, promises, and async/await.
+
+### 31. **What is the difference between `==` and `===` in JavaScript, and when should each be used?**
+   - Compare the `==` (loose equality) and `===` (strict equality) operators, how type coercion works in JavaScript, and best practices for using them in code.
+
+### 32. **What are JavaScript modules, and how do `import` and `export` work?**
+   - Explain the concept of JavaScript modules, how `import` and `export` enable code reuse and organization, and the differences between ES6 modules and CommonJS modules.
+
+### 33. **What is a promise in JavaScript, and how does it help in managing asynchronous code?**
+   - Discuss the structure and behavior of promises, how they represent the eventual completion (or failure) of an asynchronous operation, and how chaining and error handling work with `then`, `catch`, and `finally`.
+
+### 34. **How do you implement memoization in JavaScript, and what are its benefits?**
+   - Describe memoization as a performance optimization technique, how to implement it in JavaScript to cache expensive function results, and scenarios where it can be beneficial.
+
+### 35. **What are higher-order functions in JavaScript, and how can they be used to enhance code reusability?**
+   - Define higher-order functions, how they can take functions as arguments or return functions, and examples of their use in functional programming paradigms.
+
+### 36. **How does JavaScript's `async` and `await` syntax work, and what are its advantages over traditional promise chains?**
+   - Explain how `async` and `await` provide a more synchronous-looking syntax for handling asynchronous operations, how they improve code readability, and pitfalls like error handling with `try/catch`.
+
+### 37. **What are the different ways to iterate over objects and arrays in JavaScript?**
+   - Explore various iteration methods, including `for...in`, `for...of`, `forEach`, `map`, `reduce`, and `Object.keys`, and when each is appropriate based on the structure and requirements.
+
+### 38. **What is event delegation in JavaScript, and how does it improve performance?**
+   - Discuss the concept of event delegation, how it leverages event bubbling to handle events efficiently by attaching a single event listener to a parent element, and scenarios where it is particularly useful.
+
+### 39. **What are generators in JavaScript, and how do they differ from regular functions?**
+   - Explain the concept of generators, how they use the `function*` syntax to produce iterable sequences, and their advantages for implementing iterators, async flows, and complex control structures.
+
+### 40. **How do you handle errors in JavaScript, and what are the best practices for error handling?**
+   - Discuss strategies for managing errors, including `try/catch`, custom error classes, and promise-based error handling, and best practices like logging, user notifications, and fail-safes.
+
+These questions aim to test a deep understanding of JavaScript’s advanced concepts, best practices, and the ability to solve complex problems in real-world scenarios.
+
+Here are more advanced JavaScript interview questions:
+
+### 41. **What are Proxy and Reflect in JavaScript, and how do they work together?**
+   - Explain the purpose of the `Proxy` object, how it allows you to intercept and redefine fundamental operations on objects, and how the `Reflect` object provides methods for those same operations, often used in conjunction with `Proxy`.
+
+### 42. **How does the JavaScript engine optimize code execution, and what are hidden classes?**
+   - Discuss the internal optimizations performed by JavaScript engines like V8, including just-in-time (JIT) compilation and hidden classes, which are used to optimize property access.
+
+### 43. **What is the difference between synchronous and asynchronous exceptions in JavaScript?**
+   - Compare synchronous exceptions (e.g., thrown errors in a `try/catch` block) with asynchronous exceptions (e.g., unhandled rejections in promises), and how each should be handled.
+
+### 44. **How do you manage memory in JavaScript, and what are common memory leaks?**
+   - Discuss how memory management works in JavaScript, including the garbage collection process, and common memory leaks such as closures holding onto unused variables, event listeners, or circular references.
+
+### 45. **What are custom elements in JavaScript, and how do you create them using the Web Components standard?**
+   - Explain how to create custom HTML elements using the Web Components API, including the use of `HTMLElement`, shadow DOM, and custom element lifecycle callbacks.
+
+### 46. **How does the `new` keyword work in JavaScript, and what happens under the hood when you create an object using a constructor function?**
+   - Describe the behavior of the `new` keyword, including the creation of a new object, setting the prototype, binding `this`, and returning the new object or an explicit return value if it's an object.
+
+### 47. **What are the different phases of JavaScript execution, and how does the call stack handle function execution?**
+   - Explain the phases of execution in JavaScript, including the creation and execution contexts, how the call stack operates, and how stack overflow can occur.
+
+### 48. **How does JavaScript handle tail call optimization (TCO), and in what scenarios does it apply?**
+   - Discuss tail call optimization, how it allows certain function calls to be executed without adding a new stack frame, and the requirements for TCO in JavaScript.
+
+### 49. **What is the purpose of the `await` operator in asynchronous functions, and how does it affect the event loop?**
+   - Explain how the `await` operator pauses the execution of an async function until a promise is resolved, how it impacts the event loop, and the potential pitfalls like deadlock or unhandled rejections.
+
+### 50. **How do you handle circular dependencies in JavaScript modules, and what problems can they cause?**
+   - Discuss the issue of circular dependencies, how they can lead to incomplete module loading or runtime errors, and strategies for resolving them, such as restructuring modules or using dynamic imports.
+
+### 51. **What are Typed Arrays in JavaScript, and how do they differ from regular arrays?**
+   - Describe Typed Arrays, how they provide a mechanism for handling raw binary data in JavaScript, and the differences between them and regular arrays, including fixed length and type restrictions.
+
+### 52. **How does JavaScript's `Intl` object assist with internationalization, and what are some common use cases?**
+   - Explore the `Intl` object and its features for internationalization, such as number formatting, date and time formatting, and collation, along with examples of how it can be used in a globalized application.
+
+### 53. **What is `eval` in JavaScript, and why is its use generally discouraged?**
+   - Explain the `eval` function, how it executes a string as code, and the risks associated with its use, including security vulnerabilities and performance issues, as well as safer alternatives.
+
+### 54. **How does JavaScript's `Promise.allSettled` differ from `Promise.all`, and when would you use it?**
+   - Compare `Promise.allSettled` and `Promise.all`, focusing on how `Promise.allSettled` waits for all promises to settle (resolve or reject) without failing early, and use cases where this behavior is desirable.
+
+### 55. **What are modules in JavaScript, and how does tree shaking work to optimize them?**
+   - Discuss JavaScript modules, including ES6 import/export syntax, and how tree shaking is used in bundlers like Webpack to remove unused code, reducing the size of the final bundle.
+
+### 56. **What is an Immediately Invoked Function Expression (IIFE) in JavaScript, and why is it used?**
+   - Define IIFE, how it creates a new scope to encapsulate variables, and its historical use for avoiding global scope pollution before the introduction of `let` and `const`.
+
+### 57. **How does the `Map` object differ from a regular object in JavaScript, and when should you use it?**
+   - Compare `Map` with plain objects, focusing on differences in key types, iteration order, and performance characteristics, and scenarios where `Map` is more suitable.
+
+### 58. **What is the difference between deep equality and shallow equality in JavaScript, and how can you implement each?**
+   - Discuss the concepts of shallow and deep equality, how they affect comparisons of nested objects, and methods to implement each, including recursive comparisons for deep equality.
+
+### 59. **How do JavaScript decorators work, and what are some practical examples of their use?**
+   - Explain the concept of decorators, how they are used to modify the behavior of classes and methods, and practical examples like logging, memoization, or enforcing access control.
+
+### 60. **How do you ensure that JavaScript code is robust and maintainable in large-scale applications?**
+   - Explore strategies for writing maintainable JavaScript code, including modular design, consistent coding standards, use of linters and type checkers (like TypeScript), automated testing, and clear documentation.
+
+These questions delve deeper into advanced JavaScript concepts, testing knowledge of language internals, performance considerations, and best practices in complex scenarios.
+
+Here are more advanced JavaScript interview questions:
+
+### 61. **What are JavaScript decorators, and how are they proposed to be used in modern JavaScript?**
+   - Discuss the concept of decorators, their use in modifying or enhancing class methods and properties, and the current status of the decorator proposal in JavaScript.
+
+### 62. **How do you handle asynchronous iterations in JavaScript, and what role does `for await...of` play?**
+   - Explain asynchronous iteration, how `for await...of` allows you to iterate over asynchronous iterables, and practical scenarios where this might be useful, such as processing streams or paginated data.
+
+### 63. **What is the difference between a generator function and an async generator function?**
+   - Compare regular generator functions with async generator functions, focusing on their syntax and how async generator functions allow you to work with promises in a lazy, pull-based manner.
+
+### 64. **How does the `optional chaining` operator (?.) work in JavaScript, and what problem does it solve?**
+   - Describe how the optional chaining operator provides a safe way to access deeply nested properties without having to explicitly check for `null` or `undefined` at each level.
+
+### 65. **What are dynamic imports in JavaScript, and how do they differ from static imports?**
+   - Explain the concept of dynamic imports, how they allow you to load modules asynchronously at runtime, and their advantages over static imports in scenarios like code splitting.
+
+### 66. **How does JavaScript handle bigint values, and when would you use `BigInt` over `Number`?**
+   - Discuss the `BigInt` type, how it allows for safe manipulation of large integers beyond the limits of the `Number` type, and scenarios where it is necessary, such as cryptographic calculations or working with large datasets.
+
+### 67. **What are tagged template literals in JavaScript, and how can they be used to create custom string processing functions?**
+   - Explain the concept of tagged template literals, how they allow you to process template literals with a function, and practical examples such as creating custom DSLs (Domain-Specific Languages) or implementing safe HTML.
+
+### 68. **How do you handle concurrency in JavaScript, and what are some patterns or tools that can help manage it effectively?**
+   - Discuss how JavaScript's single-threaded nature handles concurrency, explore patterns like the actor model, async queues, or worker threads, and tools like RxJS or libraries that help manage asynchronous flows.
+
+### 69. **What is the purpose of `Symbol.iterator` in JavaScript, and how can you create custom iterable objects?**
+   - Describe the `Symbol.iterator` well-known symbol, how it defines the default iterator for an object, and how to implement custom iteration protocols to create objects that can be used in `for...of` loops.
+
+### 70. **How does the `ArrayBuffer` and `DataView` API work in JavaScript, and when would you use them?**
+   - Explain the `ArrayBuffer` and `DataView` objects, how they provide low-level interfaces for working with binary data, and scenarios where they are essential, such as handling file streams or interacting with WebAssembly.
+
+### 71. **What is the purpose of the `Object.defineProperty()` method, and how does it provide more control over object properties?**
+   - Discuss the `Object.defineProperty()` method, how it allows you to define properties with specific descriptors (e.g., `configurable`, `enumerable`, `writable`), and how it can be used to create immutable objects or hide properties.
+
+### 72. **How does JavaScript's `Proxy` object enable metaprogramming, and what are some examples of its use?**
+   - Explore the `Proxy` object, how it allows you to intercept and redefine fundamental operations on objects, and examples of use cases like validation, property access control, or implementing reactive programming models.
+
+### 73. **What are template literal types in TypeScript, and how do they enhance JavaScript's capabilities?**
+   - Discuss template literal types as a TypeScript feature that extends JavaScript, how they allow for complex string type operations, and practical applications like enforcing string formats or creating strongly-typed APIs.
+
+### 74. **How does the `Object.freeze()` method work, and what are its limitations?**
+   - Explain how `Object.freeze()` makes an object immutable by freezing it, the limitations of this method (e.g., shallow freezing), and ways to create deep immutability.
+
+### 75. **What are WeakRefs in JavaScript, and how do they help with memory management?**
+   - Discuss `WeakRef` and `FinalizationRegistry`, how they allow you to hold weak references to objects to avoid memory leaks, and when it's appropriate to use them in JavaScript applications.
+
+### 76. **How does JavaScript handle mixins, and how can they be used to compose behaviors?**
+   - Explain the concept of mixins, how they allow for code reuse by composing behaviors into classes, and practical examples where mixins can be used to add functionalities across different classes.
+
+### 77. **What is a `Map` and a `WeakMap` in JavaScript, and how do they differ in terms of key management and memory?**
+   - Compare `Map` and `WeakMap`, focusing on how `WeakMap` allows for garbage collection of keys when they are no longer needed, making it suitable for caching or storing private data.
+
+### 78. **How do you implement a debounce or throttle function in JavaScript, and what are the use cases for each?**
+   - Describe the concepts of debounce and throttle, how they prevent excessive function calls in high-frequency events, and examples like handling window resizing or user input.
+
+### 79. **What are bitwise operations in JavaScript, and how can they be used to optimize performance?**
+   - Explore bitwise operations (`&, |, ^, ~, <<, >>`), how they manipulate the binary representation of numbers, and scenarios where they can optimize performance, such as handling flags or creating hash functions.
+
+### 80. **How does JavaScript's module resolution algorithm work, and what are the differences between CommonJS and ES Modules?**
+   - Discuss JavaScript's module resolution process, how it finds and loads modules, and the differences between CommonJS (used in Node.js) and ES Modules (standardized in ES6), including import/export syntax and scope management.
+
+These additional questions further probe into JavaScript's advanced concepts, testing the ability to understand, implement, and optimize complex programming patterns and features.
+
+Here are more advanced JavaScript interview questions:
+
+### 81. **What is memoization in JavaScript, and how can it improve the performance of functions?**
+   - Explain memoization as a technique to cache the results of expensive function calls, how it can reduce redundant calculations, and provide an example implementation in JavaScript.
+
+### 82. **How do you handle deep cloning of objects in JavaScript, and what challenges might you face?**
+   - Discuss the challenges of deep cloning objects, such as circular references and non-serializable properties, and explore different approaches like `JSON.parse(JSON.stringify())`, recursive functions, or using libraries like Lodash.
+
+### 83. **What is the `Object.is()` method, and how does it differ from `===` and `==` in JavaScript?**
+   - Describe the `Object.is()` method, how it performs comparisons with a few key differences from strict equality (`===`), such as handling `NaN` and `-0`, and when it might be more appropriate to use.
+
+### 84. **How does JavaScript handle sparse arrays, and what are the implications for iteration and performance?**
+   - Discuss what sparse arrays are, how JavaScript treats them, and the potential pitfalls when iterating over them or performing operations like `map` or `reduce`.
+
+### 85. **What is the purpose of `Object.getOwnPropertyDescriptors()`, and how does it differ from `Object.getOwnPropertyDescriptor()`?**
+   - Explain the `Object.getOwnPropertyDescriptors()` method, how it retrieves all property descriptors for an object's own properties, and how it differs from `Object.getOwnPropertyDescriptor()` which handles only a single property.
+
+### 86. **How does JavaScript's event delegation mechanism work, and how can it improve application performance?**
+   - Describe the concept of event delegation, how it leverages event bubbling to handle events on multiple child elements via a single event listener on a parent, and its benefits for performance in dynamic web applications.
+
+### 87. **What are ES6 modules' static nature, and how does it affect the behavior of imports and exports?**
+   - Discuss the static nature of ES6 modules, how they are evaluated at compile time, and how this impacts circular dependencies, tree shaking, and the ability to import/export bindings.
+
+### 88. **How do you optimize JavaScript code for performance, and what tools can help with profiling and optimization?**
+   - Explore various optimization techniques like code splitting, lazy loading, avoiding memory leaks, and using modern APIs. Mention tools like Chrome DevTools, Lighthouse, or Webpack Bundle Analyzer for profiling and optimization.
+
+### 89. **What is the difference between `Object.create()` and using a constructor function to create an object?**
+   - Compare `Object.create()` with constructor functions, focusing on how `Object.create()` sets the prototype of the new object and allows for more fine-grained control over inheritance without running constructor logic.
+
+### 90. **How does JavaScript's `Intl.Collator` API work, and how can it be used for locale-sensitive string comparison?**
+   - Explain the `Intl.Collator` API, how it provides a way to compare strings according to the rules of a specific locale, and examples of its use for sorting or filtering user-generated content in multilingual applications.
+
+### 91. **What are shared memory and atomic operations in JavaScript, and how are they used in multithreading?**
+   - Discuss shared memory and atomic operations introduced in the ECMAScript 2017 specification, how they enable safe data exchange between threads using `SharedArrayBuffer` and `Atomics` methods, and scenarios where they might be used.
+
+### 92. **What is the Temporal API, and how does it aim to solve the issues with `Date` in JavaScript?**
+   - Describe the Temporal API, its purpose as a replacement for the flawed `Date` object, and how it provides more accurate, readable, and flexible handling of dates, times, and time zones.
+
+### 93. **How do you implement a singleton pattern in JavaScript, and what are its advantages and disadvantages?**
+   - Explain the singleton pattern, how to implement it in JavaScript using closures or modules, and discuss its benefits, like controlled access to a single instance, as well as drawbacks like global state management.
+
+### 94. **What are private class fields in JavaScript, and how do they differ from public fields?**
+   - Discuss private class fields, how they are declared using `#`, the advantages of encapsulation they provide, and how they differ from public fields in terms of access and behavior.
+
+### 95. **How does the `async` iterator protocol differ from the regular iterator protocol in JavaScript?**
+   - Compare the regular iterator protocol with the async iterator protocol, focusing on how `async` iterators return promises and are used in asynchronous iteration patterns like `for await...of`.
+
+### 96. **What are module namespaces in JavaScript, and how do they enhance modularization?**
+   - Explain module namespaces, how they group related functionalities into a single module object, and how they enhance code modularization and prevent name collisions.
+
+### 97. **How do JavaScript's `WeakSet` and `WeakMap` differ from `Set` and `Map`, and what are their use cases?**
+   - Compare `WeakSet` and `WeakMap` with `Set` and `Map`, focusing on the garbage collection of keys in `WeakMap` and `WeakSet`, and scenarios where they are preferred, like managing private data or handling dynamic object references.
+
+### 98. **How does JavaScript handle big-endian and little-endian data, and why is it important in binary data processing?**
+   - Discuss the concepts of big-endian and little-endian data formats, how JavaScript handles them using `DataView`, and why understanding endianness is crucial when working with binary data, such as in network protocols or file formats.
+
+### 99. **What are dynamic `import()` expressions, and how do they differ from regular imports?**
+   - Describe dynamic `import()` expressions, how they allow for conditionally loading modules at runtime, and their differences from regular static imports, particularly in terms of code splitting and async module loading.
+
+### 100. **What is function currying in JavaScript, and how can it be used to create more flexible functions?**
+   - Explain the concept of currying, how it transforms a function with multiple arguments into a sequence of functions each with a single argument, and how it can be used to create more reusable and flexible code.
+
+These questions continue to delve deeper into JavaScript's advanced features, challenging a candidate's understanding of complex concepts, design patterns, and modern language capabilities.
+
+Here are more advanced JavaScript interview questions:
+
+### 101. **How does the JavaScript engine optimize tail call recursion, and what are its implications for recursion?**
+   - Discuss tail call optimization (TCO) in JavaScript, how it optimizes recursive functions by reusing the current stack frame, and the scenarios where this is beneficial, particularly for deep recursion.
+
+### 102. **What is a Proxy object in JavaScript, and how can it be used to intercept and customize operations on objects?**
+   - Explain the concept of a Proxy object, how it can intercept fundamental operations (e.g., property lookup, assignment, enumeration), and provide examples of its use cases, such as validation, tracing, or reactive programming.
+
+### 103. **How does JavaScript handle dynamic imports, and what are the advantages and limitations compared to static imports?**
+   - Discuss how dynamic imports using `import()` allow for lazy-loading of modules, the benefits of reduced initial load time and better control over dependencies, and the limitations compared to static imports.
+
+### 104. **What is the difference between `undefined` and `undeclared` variables in JavaScript, and how can they impact code execution?**
+   - Describe the difference between `undefined` (a declared variable without an assigned value) and `undeclared` (a variable that hasn't been declared in the scope), and discuss how referencing undeclared variables can lead to runtime errors.
+
+### 105. **How does JavaScript's `Reflect` API enhance metaprogramming, and how does it differ from the `Proxy` API?**
+   - Explore the `Reflect` API, how it provides methods for interceptable JavaScript operations similar to those handled by `Proxy`, and how it can simplify metaprogramming by providing a default behavior for proxies.
+
+### 106. **What are generator functions in JavaScript, and how do they differ from regular functions?**
+   - Explain generator functions, how they use the `function*` syntax, yield values over time, and differ from regular functions in their ability to pause and resume execution.
+
+### 107. **How do JavaScript's `Map` and `WeakMap` differ in terms of memory management and use cases?**
+   - Discuss the differences between `Map` and `WeakMap`, focusing on how `WeakMap` allows garbage collection of keys (which must be objects) and the implications for managing memory and preventing memory leaks.
+
+### 108. **What is event loop starvation in JavaScript, and how can it be mitigated?**
+   - Describe event loop starvation, how long-running synchronous code can block the event loop, and strategies for mitigating it, such as breaking tasks into smaller asynchronous chunks using `setTimeout` or `Promise.resolve()`.
+
+### 109. **How does JavaScript's `Intl` API help with internationalization, and what are some of its key features?**
+   - Explain the `Intl` API, how it supports internationalization with features like locale-sensitive date and time formatting, number formatting, and string comparison, and provide examples of its practical use.
+
+### 110. **What is the purpose of `ArrayBuffer` and `TypedArray` objects in JavaScript, and how are they used in handling binary data?**
+   - Explore `ArrayBuffer` and `TypedArray` objects, how they enable handling raw binary data, and discuss use cases like working with WebGL, File APIs, or network protocols.
+
+### 111. **What is a JavaScript Symbol, and how does it differ from other primitive types?**
+   - Discuss the `Symbol` primitive type, how it creates unique, immutable identifiers that can be used as keys in objects, and its significance in avoiding naming collisions and implementing private properties.
+
+### 112. **How does JavaScript's `call`, `apply`, and `bind` methods differ, and when should each be used?**
+   - Explain the differences between `call`, `apply`, and `bind`, focusing on how they change the `this` context of a function, the differences in argument handling, and scenarios for their appropriate use.
+
+### 113. **What is function hoisting in JavaScript, and how does it differ between function declarations and function expressions?**
+   - Describe function hoisting, how function declarations are hoisted with their definitions, while function expressions are hoisted only with the variable declaration, and the implications for code behavior.
+
+### 114. **How does JavaScript handle cross-origin resource sharing (CORS), and what are the security implications?**
+   - Discuss the CORS mechanism, how it controls access to resources across different origins using HTTP headers, and the potential security implications of misconfiguring CORS policies.
+
+### 115. **What are the differences between synchronous and asynchronous code execution in JavaScript, and how do Promises help manage asynchronous operations?**
+   - Compare synchronous and asynchronous code execution, discuss the challenge of callback hell, and explain how Promises provide a more manageable way to handle asynchronous operations with `then`, `catch`, and `finally`.
+
+### 116. **What is the significance of immutability in JavaScript, and how can it be enforced in objects and arrays?**
+   - Explore the concept of immutability, why it is important for maintaining predictable state, and techniques to enforce it, such as using `Object.freeze`, spread operators for shallow copies, or libraries like Immutable.js.
+
+### 117. **How do JavaScript modules enhance code organization, and what are the differences between CommonJS and ES6 modules?**
+   - Discuss the role of modules in organizing JavaScript code, compare CommonJS (used in Node.js) and ES6 modules (used in modern browsers), and highlight key differences like import/export syntax and how they handle dependencies.
+
+### 118. **What is the significance of closures in JavaScript, and how can they be used to create private variables or functions?**
+   - Explain closures, how they allow inner functions to access variables from their outer scope even after the outer function has returned, and how this concept can be used to create private variables or methods in JavaScript.
+
+### 119. **How does the `async/await` syntax improve readability and handling of asynchronous code compared to traditional Promises?**
+   - Discuss the `async/await` syntax, how it allows asynchronous code to be written in a synchronous style, making it more readable and easier to debug, and compare it with the traditional Promise-based approach.
+
+### 120. **What is tail call optimization (TCO) in JavaScript, and how does it impact recursion performance?**
+   - Describe tail call optimization, how it allows some recursive functions to execute without growing the call stack, and its impact on recursion performance, particularly for deep recursive calls.
+
+These questions continue to push the envelope of advanced JavaScript concepts, encouraging deep dives into language features, best practices, and performance considerations.
+
+Here are more advanced JavaScript interview questions:
+
+### 121. **What are `WeakSet` and `WeakMap` in JavaScript, and how do they differ from `Set` and `Map`?**
+   - Explain the purpose of `WeakSet` and `WeakMap`, their differences from `Set` and `Map`, particularly in terms of memory management and how they allow garbage collection of their elements.
+
+### 122. **How does JavaScript handle event delegation, and what are its performance benefits?**
+   - Discuss the concept of event delegation, how it leverages event bubbling to manage events at a higher level in the DOM tree, and the performance benefits it provides, especially in cases involving many elements.
+
+### 123. **What are the differences between `null` and `undefined` in JavaScript, and when should each be used?**
+   - Compare `null` and `undefined`, including their similarities and differences, and discuss best practices for using each to represent the absence of a value.
+
+### 124. **How do you implement a custom iterator in JavaScript, and what are the use cases for iterators?**
+   - Describe the process of creating a custom iterator, how it can be implemented using the `[Symbol.iterator]` method, and the scenarios where custom iterators are beneficial, such as for creating complex data structures or infinite sequences.
+
+### 125. **What is the Temporal API in JavaScript, and how does it improve date and time handling?**
+   - Explore the Temporal API, how it addresses the shortcomings of the `Date` object in JavaScript, and discuss its features for working with dates, times, time zones, and calendar systems in a more intuitive and reliable way.
+
+### 126. **How does JavaScript's `Promise.allSettled` differ from `Promise.all`, and when would you use one over the other?**
+   - Compare `Promise.allSettled` with `Promise.all`, focusing on how `Promise.allSettled` returns results for all promises, regardless of whether they were fulfilled or rejected, and when it might be more appropriate to use.
+
+### 127. **What is the difference between deep copy and shallow copy in JavaScript, and how do you implement each?**
+   - Explain the concepts of deep copy and shallow copy, the differences in how they handle nested objects, and discuss methods to implement each in JavaScript, including manual copying, using `JSON.parse(JSON.stringify())`, or utilizing libraries like Lodash.
+
+### 128. **What are the potential pitfalls of using `eval` in JavaScript, and why is it generally discouraged?**
+   - Discuss the risks associated with `eval`, including security vulnerabilities, performance issues, and debugging difficulties, and explain why it is generally considered bad practice in modern JavaScript development.
+
+### 129. **How does JavaScript handle memory management, and what are the common causes of memory leaks in a JavaScript application?**
+   - Explore how JavaScript manages memory through garbage collection, identify common causes of memory leaks (e.g., lingering references, closures, event listeners), and discuss strategies for preventing and mitigating memory leaks.
+
+### 130. **What is hoisting in JavaScript, and how does it affect variables and function declarations?**
+   - Explain hoisting, how JavaScript moves variable and function declarations to the top of their scope before execution, and the implications this has on code behavior, especially regarding `var`, `let`, `const`, and function declarations.
+
+### 131. **How does JavaScript handle asynchronous iteration, and what are the benefits of `for await...of` loops?**
+   - Discuss asynchronous iteration in JavaScript, how `for await...of` loops allow for handling asynchronous data streams, and the advantages of using them over traditional `for...of` loops or `Promise.all`.
+
+### 132. **What is the difference between function expressions and arrow functions in JavaScript, particularly regarding `this` binding?**
+   - Compare function expressions and arrow functions, with a focus on how arrow functions inherit the `this` value from their surrounding context, whereas traditional function expressions have their own `this` binding.
+
+### 133. **How do you debounce or throttle a function in JavaScript, and what are the use cases for each?**
+   - Explain the concepts of debouncing and throttling, how they help control the rate at which a function is executed, and discuss use cases for each, such as handling user input events or controlling API request rates.
+
+### 134. **What are the implications of JavaScript's single-threaded nature for concurrent programming, and how do web workers address this?**
+   - Discuss the single-threaded nature of JavaScript, the challenges it poses for concurrent programming, and how web workers provide a way to run scripts in background threads to handle CPU-intensive tasks without blocking the main thread.
+
+### 135. **How does JavaScript's `Proxy` object allow for the creation of reactive objects, and what are the typical use cases?**
+   - Explore how the `Proxy` object can intercept and redefine operations on target objects, making it possible to create reactive objects that automatically respond to changes, with examples such as Vue.js's reactivity system.
+
+### 136. **What are the potential issues with floating-point arithmetic in JavaScript, and how can they be mitigated?**
+   - Discuss the precision issues that arise from floating-point arithmetic in JavaScript, how they can lead to unexpected results, and strategies for mitigating these issues, such as using libraries like Big.js or handling calculations with integers.
+
+### 137. **How does JavaScript's `EventEmitter` work in Node.js, and what are its advantages for managing events?**
+   - Explain the `EventEmitter` class in Node.js, how it allows for the creation of custom events and listeners, and the advantages of using it to manage asynchronous events and decouple different parts of an application.
+
+### 138. **What is tail call optimization (TCO) in JavaScript, and why is it not widely supported?**
+   - Define tail call optimization, discuss its potential for optimizing recursive functions by reusing stack frames, and explore the reasons why it is not widely supported in many JavaScript engines.
+
+### 139. **What is the role of the `Symbol.iterator` in JavaScript, and how does it enable the creation of custom iterables?**
+   - Discuss the `Symbol.iterator` method, how it is used to define the iteration behavior of objects, and provide examples of creating custom iterables that can be used with `for...of` loops and other iteration constructs.
+
+### 140. **How does JavaScript handle equality comparisons, and what are the differences between `==` and `===`?**
+   - Explore how JavaScript handles equality comparisons, the differences between loose equality (`==`) and strict equality (`===`), including type coercion behavior, and discuss best practices for choosing between the two.
+
+These questions dive into advanced aspects of JavaScript, focusing on memory management, concurrency, advanced data structures, and language-specific optimizations. They are designed to challenge even experienced JavaScript developers and assess their deep understanding of the language.
+
+
+
+
+
+
+
+
 I'd be glad to explain the difference between function expressions and function statements in JavaScript:
 
 **Function Statement:**
